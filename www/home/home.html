@@ -1,0 +1,49 @@
+ <ion-view view-title="Home">
+		
+		<button class="button" ng-click="test()">
+			I'm a button on the primary of the navbar!
+		  </button>
+	
+
+
+	<!--
+		<ion-item href="#/memory">
+			<img ng-src="home/img/memory.gif" alt="משחק הזיכרון" />
+		</ion-item>
+		<ion-item href="#/lotto">
+			<img ng-src="home/img/lotto.jpg" alt="לוטו" />
+		</ion-item>
+		-->
+		<ion-item href="#/memory">
+			<img ng-src={{memoryImgPath}} alt="משחק הזיכרון" />
+		</ion-item>
+		<ion-item href="#/lotto">
+			<img ng-src={{lottoImgPath}} alt="לוטו" />
+		</ion-item>
+	</ion-list>  
+	  
+	  </div>
+</ion-view>
+	
+	<!--
+	<ion-nav-view name="index">
+	Home
+	
+	
+	<ion-pane>
+      <ion-header-bar class="bar-stable">
+        <h1 class="title">Ionic Blank Starter</h1>
+      </ion-header-bar>
+      <ion-content>
+      </ion-content>
+    </ion-pane>
+	
+	
+	
+	
+	
+	</ion-nav-view>
+	
+	ng-controller = 'HomeCtrl'
+	-->
+	
