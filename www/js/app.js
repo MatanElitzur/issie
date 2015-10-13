@@ -37,6 +37,11 @@ angular.module('starter', ['ionic', 'homeModule', 'lottoModule', 'memoryModule']
 		    templateUrl: 'lottoGame/lotto.html',
 			controller: 'LottoCtrl'
 		})
+		.state('memoryconfig', {
+			url: '/memoryconfig',
+			templateUrl: 'memoryGame/memoryConfig.html',
+			controller: 'MemoryConfigCtrl'
+		})
 		$urlRouterProvider.otherwise('/home');
 	
 });
