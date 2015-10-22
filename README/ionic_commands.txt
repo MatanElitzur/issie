@@ -1,0 +1,52 @@
+Ionic Icons --> http://ionicons.com/
+%AppData%/npm --> Where all npm global modules are installed
+*********************************************
+INSTALL IONIC
+npm install -g cordova ionic
+*********************************************
+CHECK IONIC (By creating a project)
+cd ~/Desktop/Matan/Ionic
+**************** Create Ionic application ********************
+ionic start someApp 
+//ionic start someApp <TEMPLATE> the default template is tabs
+//ionic start someApp tabs
+//ionic start siseApp sidemenu
+//ionic start blankApp blank
+//ionic start mapsApp maps
+//ionic start salesforceApp salesforce
+//ionic start testsApp tests
+//ionic start complexListApp complex-list
+//ionic start codePenApp <CODEPEN-TEMPLATE(http://codepen.io/ionic/public-list/)> -->
+//ionic start codePenFlickerSearchExample http://codepen.io/ionic/pen/CrInw
+
+
+
+******** Run the application ******************************
+cd someApp
+ionic serve // on the browser
+//ionic serve - l ==> Display application as IOS & Android on the same page
+ionic run android // run application on device
+*********************************************************
+ionic upload --> upload application to ionic view application on device
+
+*******************************************88
+index.html
+<ion-nav-bar class="bar-stable"> ==> <ion-nav-bar class="bar-positive"> 
+
+http://view.ionic.io
+*** Invite anyone to preview and test your app
+ionic share EMAIL
+*****************************  Use cordova API  *********************************
+
+cordova plugin add org.apache.cordova.camera
+cordova plugin add org.apache.cordova.splashscreen
+
+***************************** platform ******************************************
+ionic platform add android (Add the android platform to the app to use app on android)
+ionic -d platform add android // -d get more debug information.
+cordova -d platform add android
+
+***************** Build *******************************************
+ionic build android
+
+        

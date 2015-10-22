@@ -1,0 +1,4 @@
+******* Android
+cordova.file.dataDirectory --> file:///data/data/com.ionicframework.issie339895/files/"
+cordova.file.applicationDirectory --> "file:///android_asset/"
+cordova.file.externalApplicationStorageDirectory --> "file:///storage/emulated/0/Android/data/com.ionicframework.issie339895/"
