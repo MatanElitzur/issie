@@ -47,6 +47,11 @@ angular.module('starter', ['ionic', 'homeModule', 'lottoModule', 'memoryModule',
 			templateUrl: 'image/image.html',
 			controller: 'ImageCtrl'
 		})
+		.state('user', {
+			url: '/user',
+			templateUrl: 'user/user.html',
+			controller: 'UserCtrl'
+		})
 		$urlRouterProvider.otherwise('/home');
 
 });
