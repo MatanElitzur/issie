@@ -1,8 +1,10 @@
 <ion-view view-title="Image">
-    Image html
-    <ion-list>
-        <ion-item ng-repeat="image in images">
-            <img ng-src="{{image}}" alt="{{image}}">
-        </ion-item>
-    </ion-list>
+    <div class="bar bar-header bar-calm">
+        <h1 class="title">  תמונות </h1>
+        <button class="button icon-right ion-plus-circled" onclick="imagePicker()"></button>
+    </div>
+
+    <ion-scroll direction="x" style="height:200px; min-height: 200px; overflow: scroll; white-space: nowrap;">
+        <img ng-repeat="image in images" ng-src="{{urlForImage(image)}}" style="height:200px; padding: 5px 5px 5px 5px;"/>
+    </ion-scroll>
 </ion-view>
