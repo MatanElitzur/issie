@@ -6,6 +6,7 @@
 angular.module('starter', ['ionic', 'ngCordova' ,'homeModule', 'lottoModule', 'memoryModule', 'memoryConfigModule', 'gamesServicesModule', 'imageModule'])
 
 .run(function($ionicPlatform, ImageService) {
+  // we have to wait for the $ionicPlatform.ready event to make sure the device is ready.
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -46,8 +47,8 @@ angular.module('starter', ['ionic', 'ngCordova' ,'homeModule', 'lottoModule', 'm
 		})
 		.state('image', {
 			url: '/image',
-			templateUrl: 'image/image.html',
-			controller: 'ImageCtrl'
+			templateUrl: 'image/image.html' /*,
+			controller: 'ImageCtrl'*/
 		})
 		.state('user', {
 			url: '/user',

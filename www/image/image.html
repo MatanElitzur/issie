@@ -1,10 +1,34 @@
-<ion-view view-title="Image">
+<ion-view view-title="Image" ng-controller="ImageCtrl as vm">
     <div class="bar bar-header bar-calm">
-        <h1 class="title">  ������ </h1>
-        <button class="button icon-right ion-plus-circled" onclick="imagePicker()"></button>
+      <button class="button icon-left ion-trash-a" ng-model="showFooter" ng-hide="showTrashCan"></button>
+        <h1 class="title">
+תמונות</h1>
+        <button class="button icon-right ion-plus-circled" ng-click="vm.imagePicker()"></button>
     </div>
 
-    <ion-scroll direction="x" style="height:200px; min-height: 200px; overflow: scroll; white-space: nowrap;">
-        <img ng-repeat="image in images" ng-src="{{urlForImage(image)}}" style="height:200px; padding: 5px 5px 5px 5px;"/>
+  <ion-content direction="y">
+  <!--
+  <ion-scroll direction="y" style="height:200px; min-height: 200px; overflow: scroll; white-space: nowrap;">
+
+     <ion-refresher pulling-text="Pull To Refresh" on-refresh="vm.refreshImages()"
+                   refreshing-text="Fetching ..." refreshing-icon="ion-loading-b">
+     </ion-refresher>
+             <img ng-repeat="image in vm.images" ng-src="{{image}}" style="height:200px; padding: 5px 5px 5px 5px;"/>
     </ion-scroll>
+    track by $index
+     -->
+        <ion-list>
+          <ion-item ng-repeat="imageIndex in vm.images">
+            <ion-checkbox ng-model="image.isCheckedToDelete"></ion-checkbox>
+            <img ng-src="{{imageIndex.image}}" style="height:200px; padding: 5px 5px 5px 5px;">
+          </ion-item>
+        </ion-list>
+
+    </ion-content>
+
+   <div id="footerBar" class="bar bar-footer bar-calm" ng-show="showFooter">
+     <button class="button" ng-model="showTrashCan" ng-click="vm.removeDeleteImagesCheckbox()"> ביטול </button>
+     <button class="button" ng-click="vm.deleteImages()"> מחק </button>
+   </div>
+
 </ion-view>

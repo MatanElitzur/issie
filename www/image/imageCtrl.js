@@ -1,87 +1,105 @@
-angular.module('imageModule').controller('ImageCtrl', ['$scope' ,'$cordovaImagePicker','$cordovaFile', 'ImageService', function($scope ,$cordovaImagePicker ,$cordovaFile, ImageService){
+angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicker','$cordovaFile', 'ImageService', '$scope', function( $q ,$cordovaImagePicker ,$cordovaFile, ImageService, $scope){
 
-    $scope.images = [];
+  var vm = this;
+  vm.images = [];
 
-    function getImages() {
-        $scope.images = ImageService.getImages();
-    }
+  var options = {
+    maximumImagesCount: 10,
+    width: 800,
+    height: 800,
+    quality: 80
+  };
 
-    $scope.imagePicker = function(){
-        $cordovaImagePicker.getPictures(
-            function(results){
-                for(var i = 0 ; i < results.length ; i++){
-                    console.log('Image URI: ' + results[i]);
-                    //$scope.images.push(results[i]);
-                    //createFileEntry(results[i]);
-                    copyFile(results[i]);
-                }
-                if(!$scope.$$phase){
-                    $scope.$apply();
-                }
-            }, function (error){
-                console.log('Error: ' + error);
-            }
-        );
-    }
+  vm.getImages = function() {
+    var deferred = $q.defer();
+    ImageService.getAllImages().then(function(result){
+      vm.images = result;
+      deferred.resolve();
+    });
+    return deferred.promise;
+  }
+  //For the first time get all images from filesystem
+  vm.getImages();
 
-/*
-    function createFileEntry(fileURI) {
-        window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
-    }
-*/
-    function copyFile(imageUrl) {
-        return $q(function(resolve, reject) {
-            var nameOfFile = imageUrl.substr(imageUrl.lastIndexOf('/') + 1);
-            var nameOfFilePath = imageUrl.substr(0, imageUrl.lastIndexOf('/') + 1);
-            var newNameOfFile = makeid() + nameOfFile;
-                                 //path, fileName, newPath, newFileName
-            $cordovaFile.copyFile(nameOfFilePath, nameOfFile, cordova.file.dataDirectory, newNameOfFile)
-                .then(function(info) {
-                    ImageService.addImage(newName);
-                    resolve();
-                }, function(e) {
-                    reject();
-                });
-
-/*
-        var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
-        var newName = makeid() + name;
-
-        window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem2) {
-                fileEntry.copyTo(
-                    fileSystem2,
-                    newName,
-                    onCopySuccess,
-                    fail
-                );
-            },
-            fail);*/
-        })
-    }
-/*
-    function onCopySuccess(entry) {
-        $scope.$apply(function () {
-            $scope.images.push(entry.nativeURL);
-            window.localStorage.setItem(IMAGE_STORAGE_KEY, JSON.stringify($scope.images));
-        });
-    }
-
-    function fail(error) {
-        console.log("fail: " + error.code);
-    }
-*/
-    function makeid() {
-        var text = "";
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-        for (var i=0; i < 5; i++) {
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
+  vm.imagePicker = function(){
+    $cordovaImagePicker.getPictures(options)
+      .then(function (results) {
+        for(var i = 0 ; i < results.length ; i++){
+          console.log('Image URI: ' + results[i]);
+          copyFile(results[i]);
         }
-        return text;
+      }, function (error){
+        console.log('Image Picker Error: ' + error);
+      });
+  }
+
+  vm.deleteImages = function(){
+      //isCheckedToDelete
+      for(var i = 0 ; i < vm.images.length ; i++){
+          if(vm.images[i].isCheckedToDelete){
+            console.log('Delete image: ' + vm.images[i].imageName);
+          }
+      }
+  }
+
+  vm.removeDeleteImagesCheckbox = function(){
+    for(var i = 0 ; i < vm.images.length ; i++){
+        vm.images[i].isCheckedToDelete = false;
     }
+  }
 
+  vm.refreshImages = function(){
+    vm.getImages().finally(function(){
+        // Stop the ion-refresher from spinning)
+        $scope.$broadcast('scroll.refreshComplete');
+        console.log('Image refresher finished');
+    });
+  }
 
+  function copyFile(imageUrl) {
+    return $q(function(resolve, reject) {
+      var nameOfFile = imageUrl.substr(imageUrl.lastIndexOf('/') + 1);
+      var nameOfFilePath = imageUrl.substr(0, imageUrl.lastIndexOf('/') + 1);
+      var newNameOfFile = makeid() + nameOfFile;
+      //path, fileName, newPath, newFileName
+      $cordovaFile.copyFile(nameOfFilePath, nameOfFile, /*cordova.file.dataDirectory*/ cordova.file.externalApplicationStorageDirectory, newNameOfFile)
+        .then(function(info) {
+          ImageService.addImage(addJsonFormat(cordova.file.externalApplicationStorageDirectory + newNameOfFile));
+          resolve();
+        }, function(error) {
+          console.log('Failed to copy image: ' + imageUrl + " To cordova.file.dataDirectory " + cordova.file.dataDirectory + "new filename is: " + newNameOfFile + " Error: " + error);
+          reject();
+        });
+    })
+  }
 
+  function addJsonFormat(parameterValue)
+  {
+      var imgObj = {};
+      imgObj.image = parameterValue;
+      return imgObj;
+  }
+  /*
+   function onCopySuccess(entry) {
+   vm.$apply(function () {
+   vm.images.push(entry.nativeURL);
+   window.localStorage.setItem(IMAGE_STORAGE_KEY, JSON.stringify(vm.images));
+   });
+   }
+
+   function fail(error) {
+   console.log("fail: " + error.code);
+   }
+   */
+  function makeid() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i=0; i < 5; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+  }
 
 
 }]);
