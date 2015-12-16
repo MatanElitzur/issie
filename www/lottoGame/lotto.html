@@ -4,7 +4,7 @@
      <div class = "inner_lotto">
      <ul class = "lotto" ng-repeat="image in imagesData" ng-if="$index%3==0">
        <li class = "lotto">
-        <img id = "{{$index}}" class = "lotto" ng-src="{{'/lottoGame/img/'+image.fileName}}"/>
+        <img id = "{{$index}}" class = "lotto" ng-src="{{'./lottoGame/img/'+image.fileName}}"/>
 
        </li>
 
@@ -13,7 +13,7 @@
      <div class = "inner_lotto">
      <ul class = "lotto" ng-repeat="image in imagesData" ng-if="$index%3==1">
        <li class = "lotto">
-         <img id = "{{$index}}" class = "lotto" ng-src="{{'/lottoGame/img/'+image.fileName}}" />
+         <img id = "{{$index}}" class = "lotto" ng-src="{{'./lottoGame/img/'+image.fileName}}" />
 
        </li>
 
@@ -22,7 +22,7 @@
      <div class = "inner_lotto">
        <ul class = "lotto" ng-repeat="image in imagesData" ng-if="$index%3==2">
          <li class = "lotto">
-           <img id = "{{$index}}" class = "lotto" ng-src="{{'/lottoGame/img/'+image.fileName}}" />
+           <img id = "{{$index}}" class = "lotto" ng-src="{{'./lottoGame/img/'+image.fileName}}" />
 
          </li>
 
