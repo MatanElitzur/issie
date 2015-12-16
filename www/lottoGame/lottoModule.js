@@ -1,1 +1,2 @@
-angular.module('lottoModule', []);
+var app=angular.module('lottoModule',[]);
+

@@ -1,3 +1,43 @@
  <ion-view view-title="Lotto">
-  Loto Game
- </ion-view>
+
+   <div class="row lotto"  ng-app="lottoModule" ng-controller="LottoCtrl" >
+     <div class = "inner_lotto">
+     <ul class = "lotto" ng-repeat="image in imagesData" ng-if="$index%3==0">
+       <li class = "lotto">
+        <img id = "{{$index}}" class = "lotto" ng-src="{{'/lottoGame/img/'+image.fileName}}"/>
+
+       </li>
+
+     </ul>
+     </div>
+     <div class = "inner_lotto">
+     <ul class = "lotto" ng-repeat="image in imagesData" ng-if="$index%3==1">
+       <li class = "lotto">
+         <img id = "{{$index}}" class = "lotto" ng-src="{{'/lottoGame/img/'+image.fileName}}" />
+
+       </li>
+
+     </ul>
+   </div>
+     <div class = "inner_lotto">
+       <ul class = "lotto" ng-repeat="image in imagesData" ng-if="$index%3==2">
+         <li class = "lotto">
+           <img id = "{{$index}}" class = "lotto" ng-src="{{'/lottoGame/img/'+image.fileName}}" />
+
+         </li>
+
+       </ul>
+     </div>
+
+
+
+   </div>
+   <div id ="tempimg" class = "bottom_lotto">
+     <img id = "refresh" class = "refresh" src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVP3rekkouYBnWZrvv_5nhnf8VOHKM4oYQ4vazRgo_FOUmdYTECw" ng-click="refresh()"  />
+     <img  id = "tempid" />
+     </div>
+</ion-view>
+
+ <script src="lottoModule.js"></script>
+ <script src="lottoCtrl.js"></script>
+
