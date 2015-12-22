@@ -1,33 +1,24 @@
 <ion-view view-title="Image" ng-controller="ImageCtrl as vm">
     <div class="bar bar-header bar-calm">
-      <button class="button icon-left ion-trash-a" ng-model="showFooter" ng-hide="showTrashCan"></button>
+      <button class="button icon-left ion-trash-a" ng-click="vm.showDeleteOptions()" ng-hide="varShowDeleteOptions"></button>
         <h1 class="title">
 תמונות</h1>
         <button class="button icon-right ion-plus-circled" ng-click="vm.imagePicker()"></button>
     </div>
 
-  <ion-content direction="y">
-  <!--
-  <ion-scroll direction="y" style="height:200px; min-height: 200px; overflow: scroll; white-space: nowrap;">
-
-     <ion-refresher pulling-text="Pull To Refresh" on-refresh="vm.refreshImages()"
-                   refreshing-text="Fetching ..." refreshing-icon="ion-loading-b">
-     </ion-refresher>
-             <img ng-repeat="image in vm.images" ng-src="{{image}}" style="height:200px; padding: 5px 5px 5px 5px;"/>
-    </ion-scroll>
-    track by $index
-     -->
+  <ion-content class="has-header" direction="y">
         <ion-list>
           <ion-item ng-repeat="imageIndex in vm.images">
-            <ion-checkbox ng-model="image.isCheckedToDelete"></ion-checkbox>
-            <img ng-src="{{imageIndex.image}}" style="height:200px; padding: 5px 5px 5px 5px;">
+            <div style="position: relative; left: 0; top: 0;">
+              <img ng-src="{{imageIndex.image}}" style="height:200px; padding: 5px 5px 5px 5px; position: relative; top: 0; left: 0; z-index: -1;">
+              <ion-checkbox ng-show="varShowDeleteOptions"  style="position: absolute; top: 20px; left: 10px; border-style: none; background-color: transparent; " ng-model="image.isCheckedToDelete"></ion-checkbox>
+            </div>
           </ion-item>
         </ion-list>
-
     </ion-content>
 
-   <div id="footerBar" class="bar bar-footer bar-calm" ng-show="showFooter">
-     <button class="button" ng-model="showTrashCan" ng-click="vm.removeDeleteImagesCheckbox()"> ביטול </button>
+   <div id="footerBar" class="bar bar-footer bar-calm" ng-show="varShowDeleteOptions">
+     <button class="button" ng-click="vm.showTrashCanIcon()"> ביטול </button>
      <button class="button" ng-click="vm.deleteImages()"> מחק </button>
    </div>
 

@@ -10,6 +10,15 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
     quality: 80
   };
 
+  vm.showDeleteOptions = function(){
+    $scope.varShowDeleteOptions = !$scope.varShowDeleteOptions;
+  }
+  
+  vm.showTrashCanIcon = function(){
+    //Remove all delete check boxs
+    vm.showDeleteOptions();
+  }
+  
   vm.getImages = function() {
     var deferred = $q.defer();
     ImageService.getAllImages().then(function(result){
@@ -42,7 +51,7 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
       }
   }
 
-  vm.removeDeleteImagesCheckbox = function(){
+  function removeDeleteImagesCheckbox(){
     for(var i = 0 ; i < vm.images.length ; i++){
         vm.images[i].isCheckedToDelete = false;
     }
@@ -79,18 +88,7 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
       imgObj.image = parameterValue;
       return imgObj;
   }
-  /*
-   function onCopySuccess(entry) {
-   vm.$apply(function () {
-   vm.images.push(entry.nativeURL);
-   window.localStorage.setItem(IMAGE_STORAGE_KEY, JSON.stringify(vm.images));
-   });
-   }
 
-   function fail(error) {
-   console.log("fail: " + error.code);
-   }
-   */
   function makeid() {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
