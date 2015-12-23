@@ -11,7 +11,7 @@
           <ion-item ng-repeat="imageIndex in vm.images">
             <div style="position: relative; left: 0; top: 0;">
               <img ng-src="{{imageIndex.image}}" style="height:200px; padding: 5px 5px 5px 5px; position: relative; top: 0; left: 0; z-index: -1;">
-              <ion-checkbox ng-show="varShowDeleteOptions"  style="position: absolute; top: 20px; left: 10px; border-style: none; background-color: transparent; " ng-model="image.isCheckedToDelete"></ion-checkbox>
+              <ion-checkbox ng-show="varShowDeleteOptions"  style="position: absolute; top: 20px; left: 10px; border-style: none; background-color: transparent; " ng-model="imageIndex.checkedToDelete" ng-change="vm.addCounterForDeleteButton(imageIndex)"></ion-checkbox>
             </div>
           </ion-item>
         </ion-list>
@@ -19,7 +19,7 @@
 
    <div id="footerBar" class="bar bar-footer bar-calm" ng-show="varShowDeleteOptions">
      <button class="button" ng-click="vm.showTrashCanIcon()"> ביטול </button>
-     <button class="button" ng-click="vm.deleteImages()"> מחק </button>
+     <button class="button" ng-disabled="vm.deleteButtonDisable" ng-click="vm.deleteImages()"> מחק </button>
    </div>
 
 </ion-view>

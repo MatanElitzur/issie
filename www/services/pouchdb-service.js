@@ -65,7 +65,7 @@ angular.module('gamesServicesModule').factory('ImageService', ['$q', function($q
     };
 
     function onDatabaseChange(change) {
-        var index = findIndex(_images, change.doc.id);
+        var index = findIndex(_images, change.doc._id);
         var image = _images[index];
 
         if (change.deleted) {
@@ -73,7 +73,7 @@ angular.module('gamesServicesModule').factory('ImageService', ['$q', function($q
                 _images.splice(index, 1); // delete
             }
         } else {
-            if (image && image._id === change.doc.id) {
+            if (image && image._id === change.doc._id) {
                 _images[index] = change.doc; // update
             } else {
                 _images.splice(index, 0, change.doc) // insert

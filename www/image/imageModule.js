@@ -1,3 +1,3 @@
 angular.module('imageModule', []);
-//angular.module('imageModule').constant('PARAMETER_IMG_NAME','ImgName');
+angular.module('imageModule').constant('MAX_NUMBER_OF_IMAGES_TO_ADD',50);
 
