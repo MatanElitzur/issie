@@ -1,4 +1,4 @@
-angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicker','$cordovaFile', 'ImageService', '$scope', 'MAX_NUMBER_OF_IMAGES_TO_ADD', '$ionicPopup', function( $q ,$cordovaImagePicker ,$cordovaFile, ImageService, $scope, MAX_NUMBER_OF_IMAGES_TO_ADD, $ionicPopup){
+angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicker','$cordovaFile', 'ImageService', '$scope', 'MAX_NUMBER_OF_IMAGES_TO_ADD', '$ionicPopup', '$timeout', function( $q ,$cordovaImagePicker ,$cordovaFile, ImageService, $scope, MAX_NUMBER_OF_IMAGES_TO_ADD, $ionicPopup, $timeout){
 
   var vm = this;
   vm.images = [];
@@ -13,7 +13,18 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
   };
 
   vm.showDeleteOptions = function(){
-    $scope.varShowDeleteOptions = !$scope.varShowDeleteOptions;
+     if(vm.images.length == 0){
+        var noImagesPopup = $ionicPopup.show({
+          title: 'אין תמונות למחיקה'
+        });
+    
+        $timeout(function() {
+          noImagesPopup.close(); //close the popup after 3 seconds for some reason
+        }, 3000);
+     }
+     else{
+        $scope.varShowDeleteOptions = !$scope.varShowDeleteOptions;   
+     }
   }
   
   vm.showTrashCanIcon = function(){
@@ -85,7 +96,7 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
         } else {
           vm.showTrashCanIcon();
         }
-      });
+      });       
   }
     
   function deleteCheckedImages(){
