@@ -22,10 +22,11 @@ angular.module('memoryModule').controller('MemoryCtrl', ['$scope', '$http', 'jso
 
 
   $scope.toggleImage1 = function(image) {
-    if(image.src === $scope.flippedImage) {
-      image.src = "./memoryGame/img/Barot_Bellingham_tn.jpg";
+    var curImg=  $scope.images[event.toElement.id];
+    if(curImg.src === $scope.flippedImage) {
+      curImg.src = "./memoryGame/img/Barot_Bellingham_tn.jpg";
     } else {
-      image.src = $scope.flippedImage;
+      curImg.src = $scope.flippedImage;
     }
   };
 
