@@ -1,6 +1,67 @@
+
 <ion-view view-title="Memory">
-    <div class="bar bar-header bar-positive">
-        <a class="button button-icon icon ion-settings" href="#/memoryconfig"></a>
-        <h1 class="title">משחק הזיכרון</h1>
+
+
+  <div class="bar bar-header bar-positive">
+    <a class="button button-icon icon ion-settings" href="#/memoryconfig"></a>
+    <h1 class="title">משחק הזיכרון</h1>
+  </div>
+
+
+  <ion-content ng-controller="MemoryCtrl" ng-init="loadImages()">
+    <div class="row" ng-repeat="image in images" ng-if="$index % 4 === 0">
+      <div class="col col-25" ng-if="$index < images.length" ng-click="toggleImage1(image)">
+        <img ng-src="{{images[$index].src}}" width="100%" />
+      </div>
+      <div class="col col-25" ng-if="$index + 1 < images.length" ng-click="toggleImage($index)">
+        <img ng-src="{{images[$index + 1].src}}" width="100%" />
+      </div>
+      <div class="col col-25" ng-if="$index + 2 < images.length" ng-click="toggleImage($index)">
+        <img ng-src="{{images[$index + 2].src}}" width="100%" />
+      </div>
+      <div class="col col-25" ng-if="$index + 3 < images.length" ng-click="toggleImage($index)">
+        <img ng-src="{{images[$index + 3].src}}" width="100%" />
+      </div>
     </div>
-</ion-view>
+  </ion-content>
+  <!--
+
+      <div class="row memory"  ng-app="memoryModule" ng-controller="memoryCtrl" >
+        <div class = "inner_memory">
+          <ul class = "memory" ng-repeat="image in imagesData" ng-if="$index%3==0">
+            <li class = "memory">
+              <img id = "{{$index}}" class = "memory" ng-src="{{'./memoryGame/img/'+image.fileName}}"/>
+
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+    //-->
+          <div class = "memory">
+            <ul class = "memory" ng-repeat="image in imagesData" ng-if="$index%3==1">
+              <li class = "memory">
+                <img id = "{{$index}}" class = "memory" ng-src="{{'./memoryGame/img/'+image.fileName}}" />
+
+              </li>
+
+            </ul>
+          </div>
+
+
+          <div class = "inner_memory">
+            <ul class = "memory" ng-repeat="image in imagesData" ng-if="$index%3==2">
+              <li class = "memory">
+                <img id = "{{$index}}" class = "memory" ng-src="{{'./memoryGame/img/'+image.fileName}}" />
+              </li>
+            </ul>
+          </div>
+
+
+
+  </ion-view>
+
+
+  <script src="memoryModule.js"></script>
+  <script src="memoryCtrl.js"></script>
