@@ -43,7 +43,7 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
     return deferred.promise;
   }
   //For the first time get all images from filesystem
-  vm.getImages();
+  //vm.getImages();
 
   vm.imagePicker = function(){
     if(vm.images.length < MAX_NUMBER_OF_IMAGES_TO_ADD){
@@ -102,13 +102,30 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
   function deleteCheckedImages(){
       for(var i = 0 ; i < vm.images.length ; i++){
           if(vm.images[i].checkedToDelete){
-            ImageService.deleteImage(vm.images[i]).then(function(success){
-               console.log('Success to delete image, success: ' + success.ok);
-            }, function(error){
-                console.log('Failed to delete image, Error: ' + error);      
-            });
+             removeImageFromFileSystem(vm.images[i]).then(function(imageObj){
+                //Remove image from database
+                ImageService.deleteImage(imageObj).then(function(success){
+                    console.log('Success to delete image from database, success: ' + success.ok);
+                }, function(error){
+                    console.log('Failed to delete image from database, Error: ' + error);      
+                });       
+             }); 
           }
       }
+  }
+  
+  function removeImageFromFileSystem(imageObj){
+    var deferred = $q.defer();
+    var nameOfFile = imageObj.image.substr(imageObj.image.lastIndexOf('/') + 1);
+    $cordovaFile.removeFile(cordova.file.externalApplicationStorageDirectory, nameOfFile)
+      .then(function (success) {
+        console.log("Success to delete image from file system: " + imageObj.image);
+        deferred.resolve(imageObj);
+      }, function (error) {
+        console.log("Error while trying to delete image from file system: " + imageObj.image + " Error: " + error);
+        //deferred.reject();
+      });
+      return deferred.promise;
   }
   
   vm.refreshImages = function(){
@@ -131,7 +148,7 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
       var nameOfFilePath = imageUrl.substr(0, imageUrl.lastIndexOf('/') + 1);
       var newNameOfFile = makeid() + nameOfFile;
       //path, fileName, newPath, newFileName
-      $cordovaFile.copyFile(nameOfFilePath, nameOfFile, /*cordova.file.dataDirectory*/ cordova.file.externalApplicationStorageDirectory, newNameOfFile)
+      $cordovaFile.copyFile(nameOfFilePath, nameOfFile,  cordova.file.externalApplicationStorageDirectory, newNameOfFile)
         .then(function(info) {
           ImageService.addImage(addJsonFormat(cordova.file.externalApplicationStorageDirectory + newNameOfFile));
           resolve();

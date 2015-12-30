@@ -1,4 +1,4 @@
-<ion-view view-title="Image" ng-controller="ImageCtrl as vm">
+<ion-view view-title="Image" ng-controller="ImageCtrl as vm" ng-init="vm.getImages()">
     <div class="bar bar-header bar-calm">
       <button class="button icon-left ion-trash-a" ng-click="vm.showDeleteOptions()" ng-hide="varShowDeleteOptions"></button>
         <h1 class="title">
@@ -7,15 +7,17 @@
     </div>
 
   <ion-content class="has-header" direction="y">
-        <ion-list>
-          <ion-item ng-repeat="imageIndex in vm.images">
-            <div style="position: relative; left: 0; top: 0;">
-              <img ng-src="{{imageIndex.image}}" style="height:200px; padding: 5px 5px 5px 5px; position: relative; top: 0; left: 0; z-index: -1;">
-              <ion-checkbox ng-show="varShowDeleteOptions"  style="position: absolute; top: 20px; left: 10px; border-style: none; background-color: transparent; " ng-model="imageIndex.checkedToDelete" ng-change="vm.addCounterForDeleteButton(imageIndex)"></ion-checkbox>
-            </div>
-          </ion-item>
-        </ion-list>
-    </ion-content>
+    <div class="row imageStyle_Gallery">
+      <div class="col col-33" ng-repeat="imageIndex in vm.images">
+          <div style="padding: 5px 5px 5px 5px; position: relative; left: 0; top: 0;">
+              <img ng-src="{{imageIndex.image}}" style="width:100%; height:auto; position: relative; top: 0; left: 0; z-index: -1;">
+              <div ng-show="varShowDeleteOptions">
+                <ion-checkbox style="position: absolute; top: 5px; left: 5px; border-style: none; background-color: transparent; " ng-model="imageIndex.checkedToDelete" ng-change="vm.addCounterForDeleteButton(imageIndex)"></ion-checkbox>
+              </div>
+          </div>
+      </div>
+    </div>
+  </ion-content>
 
    <div id="footerBar" class="bar bar-footer bar-calm" ng-show="varShowDeleteOptions">
      <button class="button" ng-click="vm.showTrashCanIcon()"> ביטול </button>

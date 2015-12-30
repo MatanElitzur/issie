@@ -1,0 +1,4 @@
+.imageStyle_Gallery {
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
