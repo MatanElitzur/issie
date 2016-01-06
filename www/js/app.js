@@ -40,6 +40,10 @@ angular.module('starter', ['ionic', 'ngCordova' ,'homeModule', 'lottoModule', 'm
 		    templateUrl: 'lottoGame/lotto.html',
 			controller: 'LottoCtrl'
 		})
+    .state('lottoConfig', {
+      url: '/lottoConfig',
+      templateUrl: 'lottoGame/lottoConfig.html'
+    })
 		.state('memoryconfig', {
 			url: '/memoryconfig',
 			templateUrl: 'memoryGame/memoryConfig.html',
