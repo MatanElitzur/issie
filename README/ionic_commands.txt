@@ -49,4 +49,9 @@ cordova -d platform add android
 ***************** Build *******************************************
 ionic build android
 
+***************** Sync ionic project from github for the first time **************************
+ionic state restore  --> Attempting to restore your Ionic application from package.json
+https://github.com/driftyco/ionic-cli#ionic-state
+
+
         
