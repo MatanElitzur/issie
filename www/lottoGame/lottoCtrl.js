@@ -1,4 +1,4 @@
-app.directive('draggable', function() {
+/*app.directive('draggable', function() {
   return function(scope, element) {
     // this gives us the native JS object
     var el = element[0];
@@ -26,13 +26,16 @@ app.directive('draggable', function() {
       false
     );
   }
-});
+});*/
 
-app.controller('LottoCtrl', function($scope, $ionicGesture, $http, $window, $interval) {
+app.controller('LottoCtrl',  function($scope, $ionicGesture, $http, $rootScope) {
   $scope.$on('$ionicView.enter',function refreshImage(){
     //var tempImg = document.createElement("img");
+    $scope.removedPictures = Array();
+    $scope.addedPictures = ["0","1","2","3","4","5","6","7","8"];
+    var totalPictures =  $scope.addedPictures.length;
     var tempImg  = document.getElementById("tempimg").getElementsByTagName("img")[1];
-    var tempId = Math.floor( Math.random() * 8 );
+    var tempId = $scope.addedPictures[Math.floor( Math.random() * totalPictures )];
     tempImg.id = 'gen'+  tempId;
     var style = document.createElement('style');
     style.type = 'text/css';
@@ -53,9 +56,9 @@ app.controller('LottoCtrl', function($scope, $ionicGesture, $http, $window, $int
     document.getElementsByTagName('head')[0].appendChild(style);
 
     tempImg.className = 'bottom';
-    var tempSrc = document.getElementById(tempId).src;
+    $scope.pairImage = document.getElementById(tempId);
+    var tempSrc = $scope.pairImage.src;
     tempImg.src = tempSrc;
-
   });
 
   $http.get('/lottoGame/data.json')
@@ -89,18 +92,31 @@ app.controller('LottoCtrl', function($scope, $ionicGesture, $http, $window, $int
   $scope.refresh = function refreshImage(){
     var tempImg  = document.getElementById("tempimg").getElementsByTagName("img")[1];
     var lastId = document.getElementById("tempimg").getElementsByTagName("img")[1].id.split('gen')[1];
-    var tempId = Math.floor( Math.random() * 8 );
-    while(tempId==lastId)
-      tempId = Math.floor( Math.random() * 8 );
+    var totalPictures =  $scope.addedPictures.length;
+    var tempId = $scope.addedPictures[Math.floor( Math.random() * totalPictures )];
+    while(tempId==lastId || $scope.removedPictures.indexOf(tempId.toString())>-1)
+      tempId =  $scope.addedPictures[Math.floor( Math.random() * totalPictures )];
     tempImg.id = 'gen'+  tempId;
     tempImg.removeAttribute("style");
     tempImg.className =  document.getElementById("tempimg").getElementsByTagName("img")[1].className;
     var tempSrc = document.getElementById(tempId).src;
     tempImg.src = tempSrc;
+    $scope.pairImage = document.getElementById(tempId);
+  };
 
-
+  $scope.evaluate = function evaluate($event){
+     if($event.currentTarget.id == $scope.pairImage.id){
+       alert("bravooo");
+       $scope.removedPictures.push($scope.pairImage.id);
+       $scope.addedPictures.splice( $scope.addedPictures.indexOf($scope.pairImage.id).toString(),1);
+       $scope.pairImage.parentElement.removeChild($scope.pairImage);
+           if($scope.addedPictures.length==0) alert("Finishhh!!!");
+       else {
+             $scope.refresh();
+           }
+     }
   }
-  $scope.lastEventCalled = 'Try to Drag the content up, down, left or rigth';
+  /*$scope.lastEventCalled = 'Try to Drag the content up, down, left or rigth';
   var element = angular.element(document.querySelector('#tempid'));
   var events = [{
     event: 'dragup'
@@ -128,7 +144,7 @@ app.controller('LottoCtrl', function($scope, $ionicGesture, $http, $window, $int
         event.srcElement.style.bottom = $window.innerHeight - event.gesture.center.pageY+"px";
       });
     }, element);
-  });
+  });*/
 });
 
 
