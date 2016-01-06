@@ -32,10 +32,14 @@ app.controller('LottoCtrl',  function($scope, $ionicGesture, $http, $rootScope) 
   $scope.$on('$ionicView.enter',function refreshImage(){
     //var tempImg = document.createElement("img");
     $scope.removedPictures = Array();
-    $scope.addedPictures = ["0","1","2","3","4","5","6","7","8"];
-    var totalPictures =  $scope.addedPictures.length;
+    $scope.addedPictures = Array();
+
+    var allPictures =   document.getElementsByClassName("row lotto")[0].getElementsByTagName("img");
+    for(var i=0;i<allPictures.length;i++){
+      $scope.addedPictures.push(allPictures[i].id);
+    }
     var tempImg  = document.getElementById("tempimg").getElementsByTagName("img")[1];
-    var tempId = $scope.addedPictures[Math.floor( Math.random() * totalPictures )];
+    var tempId = $scope.addedPictures[Math.floor( Math.random() * allPictures.length )];
     tempImg.id = 'gen'+  tempId;
     var style = document.createElement('style');
     style.type = 'text/css';
