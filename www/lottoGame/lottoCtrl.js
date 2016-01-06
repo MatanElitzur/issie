@@ -28,11 +28,7 @@
   }
 });*/
 
-<<<<<<< HEAD
 app.controller('LottoCtrl',  function($scope, $ionicGesture, $http, $rootScope) {
-=======
-app.controller('LottoCtrl',['$scope', '$ionicGesture','$http', '$window' , function($scope, $ionicGesture, $http, $window, $interval) {
->>>>>>> origin/master
   $scope.$on('$ionicView.enter',function refreshImage(){
     //var tempImg = document.createElement("img");
     $scope.removedPictures = Array();
@@ -65,7 +61,7 @@ app.controller('LottoCtrl',['$scope', '$ionicGesture','$http', '$window' , funct
     tempImg.src = tempSrc;
   });
 
-  $http.get('./lottoGame/data.json')
+  $http.get('/lottoGame/data.json')
     .then(function(res){
       $scope.imagesData = res.data.imagesData;
     });
@@ -148,12 +144,7 @@ app.controller('LottoCtrl',['$scope', '$ionicGesture','$http', '$window' , funct
         event.srcElement.style.bottom = $window.innerHeight - event.gesture.center.pageY+"px";
       });
     }, element);
-<<<<<<< HEAD
   });*/
 });
-=======
-  });
-}]);
->>>>>>> origin/master
 
 
