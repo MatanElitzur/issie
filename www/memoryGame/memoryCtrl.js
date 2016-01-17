@@ -1,6 +1,10 @@
 angular.module('memoryModule').controller('MemoryCtrl', ['$scope', '$http', 'jsonLoaderService', function($scope, $http, jsonLoaderService){
   $scope.images = [];
   $scope.flipedImages = [];
+  $scope.firstStep = null;
+  $scope.secondStep = null;
+  $scope.numberOfPairs = 0;
+  $scope.maxNumberOfPairs = 8
 
   $scope.flippedImage = "http://placehold.it/50x50";
   //$scope.flippedImage = "https://static-s.aa-cdn.net/img/ios/348862738/d3649f309860422d070114af40962512";
@@ -10,6 +14,12 @@ angular.module('memoryModule').controller('MemoryCtrl', ['$scope', '$http', 'jso
       $scope.images.push({id: i, src:  $scope.flippedImage});
       //$scope.images.push({id: i, src: "./memoryGame/img/Barot_Bellingham_tn.jpg"});
     }
+  }
+
+
+  $scope.Step = function(src, idx) {
+    this.src = src;
+    this.idx = idx;
   }
 
   $scope.toggleImage = function(image) {
@@ -22,6 +32,67 @@ angular.module('memoryModule').controller('MemoryCtrl', ['$scope', '$http', 'jso
       curImg.src = $scope.flippedImage;
     }
   };
+
+  $scope.toggleImage2 = function(image) {
+
+    if (($scope.firstStep != null) && ($scope.secondStep != null))
+    {
+      var frstIndex = $scope.firstStep.idx;
+      $scope.images[frstIndex].src = $scope.flippedImage;
+      var secIndex = $scope.secondStep.idx;
+      $scope.images[secIndex].src = $scope.flippedImage;
+      $scope.firstStep = null;
+      $scope.secondStep = null;
+
+    }
+    var tileIndex = event.toElement.id;
+    var curImg=  $scope.images[tileIndex];
+    if(($scope.firstStep ==null) && ($scope.isFlipped(curImg)))
+    {
+      curImg.src = $scope.flipedImages[tileIndex].src;
+      $scope.firstStep = new $scope.Step(curImg.src,tileIndex);
+    }
+    else{
+      if(($scope.secondStep ==null) && ($scope.isFlipped(curImg)))
+      {
+        curImg.src = $scope.flipedImages[tileIndex].src;
+        if ($scope.firstStep.src == curImg.src)
+        {
+          $scope.numberOfPairs++;
+          $scope.firstStep = null;
+          $scope.secondStep = null;
+          if ($scope.numberOfPairs == $scope.maxNumberOfPairs)
+          {
+            alert('You Win');
+          }
+        }
+        else
+        {
+          curImg.src = $scope.flipedImages[tileIndex].src;
+          $scope.secondStep = new $scope.Step(curImg.src,tileIndex);
+          //wait for three seconds;
+          setTimeout(function () {var a =1;}, 3000);
+          //curImg.src = $scope.flippedImage;
+          //var firstIndex = $scope.firstStep.idx;
+          //$scope.images[firstIndex].src = $scope.flippedImage;
+          //$scope.firstStep = null;
+          //$scope.secondStep = null;
+
+
+        }
+
+      }
+
+    }
+  };
+
+  $scope.isFlipped = function(image)
+  {
+    return image.src === $scope.flippedImage;
+  }
+
+
+
 
 
 
