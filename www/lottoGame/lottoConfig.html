@@ -1,3 +1,17 @@
-<ion-view view-title="LottoConfig">
-  lottoConfig Page
+<ion-view view-title="LottoConfig" ng-controller="LottoConfigCtrl as vm" ng-init="vm.init()">
+    <div class="bar bar-header bar-calm">
+      <h1 class="title"> לוטו קונפיגורציה </h1>
+        <a class="button icon-right ion-images" href="#/image">
+        </a>
+    </div>
+
+  <ion-content class="has-header" direction="y">
+    <div class="row imageStyle_Gallery">
+      <div class="col col-33" ng-repeat="imageIndex in vm.images">
+        <div style="padding: 5px 5px 5px 5px; position: relative; left: 0; top: 0;">
+          <img ng-src="{{imageIndex.image}}" style="width:100%; height:auto; position: relative; top: 0; left: 0;">
+        </div>
+      </div>
+    </div>
+  </ion-content>
 </ion-view>

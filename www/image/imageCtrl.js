@@ -4,7 +4,7 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
   vm.images = [];
   var counterForDeleteButton = 0;
   vm.deleteButtonDisable = true;
-  
+
   var options = {
     maximumImagesCount: 10,
     width: 800,
@@ -17,23 +17,23 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
         var noImagesPopup = $ionicPopup.show({
           title: 'אין תמונות למחיקה'
         });
-    
+
         $timeout(function() {
           noImagesPopup.close(); //close the popup after 3 seconds for some reason
         }, 3000);
      }
      else{
-        $scope.varShowDeleteOptions = !$scope.varShowDeleteOptions;   
+        $scope.varShowDeleteOptions = !$scope.varShowDeleteOptions;
      }
   }
-  
+
   vm.showTrashCanIcon = function(){
     removeCheckedImagesForDelete();
     vm.deleteButtonDisable = true;
     counterForDeleteButton = 0;
     vm.showDeleteOptions();
   }
-  
+
   vm.getImages = function() {
     var deferred = $q.defer();
     ImageService.getAllImages().then(function(result){
@@ -67,18 +67,18 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
 
   vm.addCounterForDeleteButton = function(imageObj){
     if(imageObj.checkedToDelete){
-      counterForDeleteButton++;  
+      counterForDeleteButton++;
     }
     else{
       counterForDeleteButton--;
     }
-    
+
     if(counterForDeleteButton == 0){
       vm.deleteButtonDisable = true;
     }
     else{
       vm.deleteButtonDisable = false;
-    } 
+    }
   }
 
   vm.deleteImages = function(){
@@ -88,7 +88,7 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
         cancelText: ' לא ',
         okText: ' אישור '
       });
-    
+
       deleteImagesPopup.then(function(res) {
         if(res) {
           deleteCheckedImages();
@@ -96,9 +96,9 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
         } else {
           vm.showTrashCanIcon();
         }
-      });       
+      });
   }
-    
+
   function deleteCheckedImages(){
       for(var i = 0 ; i < vm.images.length ; i++){
           if(vm.images[i].checkedToDelete){
@@ -107,13 +107,13 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
                 ImageService.deleteImage(imageObj).then(function(success){
                     console.log('Success to delete image from database, success: ' + success.ok);
                 }, function(error){
-                    console.log('Failed to delete image from database, Error: ' + error);      
-                });       
-             }); 
+                    console.log('Failed to delete image from database, Error: ' + error);
+                });
+             });
           }
       }
   }
-  
+
   function removeImageFromFileSystem(imageObj){
     var deferred = $q.defer();
     var nameOfFile = imageObj.image.substr(imageObj.image.lastIndexOf('/') + 1);
@@ -127,7 +127,7 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
       });
       return deferred.promise;
   }
-  
+
   vm.refreshImages = function(){
     vm.getImages().finally(function(){
         // Stop the ion-refresher from spinning)
@@ -141,7 +141,7 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
         vm.images[i].checkedToDelete = false;
     }
   }
-  
+
   function copyFile(imageUrl) {
     return $q(function(resolve, reject) {
       var nameOfFile = imageUrl.substr(imageUrl.lastIndexOf('/') + 1);
@@ -150,7 +150,7 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
       //path, fileName, newPath, newFileName
       $cordovaFile.copyFile(nameOfFilePath, nameOfFile,  cordova.file.externalApplicationStorageDirectory, newNameOfFile)
         .then(function(info) {
-          ImageService.addImage(addJsonFormat(cordova.file.externalApplicationStorageDirectory + newNameOfFile));
+          ImageService.addImage(ImageService.addJsonFormat(cordova.file.externalApplicationStorageDirectory + newNameOfFile, false));
           resolve();
         }, function(error) {
            var stringError = 'Failed to copy image: ' + imageUrl + " To cordova.file.dataDirectory " + cordova.file.dataDirectory + "new filename is: " + newNameOfFile + " Error: " + error;
@@ -164,13 +164,6 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
     })
   }
 
-  function addJsonFormat(parameterValue)
-  {
-      var imgObj = {};
-      imgObj.image = parameterValue;
-      return imgObj;
-  }
-
   function makeid() {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -180,6 +173,6 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
     }
     return text;
   }
-  
+
 
 }]);

@@ -10,7 +10,8 @@ angular.module('gamesServicesModule').factory('ImageService', ['$q', function($q
         // We'll add these later.
         getAllImages: getAllImages,
         addImage: addImage,
-        deleteImage: deleteImage
+        deleteImage: deleteImage,
+        addJsonFormat: addJsonFormat
     };
 
     function initDB() {
@@ -33,6 +34,14 @@ angular.module('gamesServicesModule').factory('ImageService', ['$q', function($q
           console.log('Failed to add image: ' + imgObj.image + " to pouchdb database "+ " Error: " + error);
         });
     };
+
+    function addJsonFormat(imageFullPath, imageFromJsonFile)
+    {
+      var imgObj = {};
+      imgObj.image = imageFullPath;
+      imgObj.imageFromJsonFile = imageFromJsonFile;
+      return imgObj;
+    }
 
     function deleteImage(image) {
         return $q.when(_db.remove(image));

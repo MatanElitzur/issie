@@ -8,7 +8,7 @@
 
   <ion-content class="has-header" direction="y">
     <div class="row imageStyle_Gallery">
-      <div class="col col-33" ng-repeat="imageIndex in vm.images">
+      <div class="col col-33" ng-repeat="imageIndex in vm.images | filter: {imageFromJsonFile: 'false'}">
           <div style="padding: 5px 5px 5px 5px; position: relative; left: 0; top: 0;">
               <img ng-src="{{imageIndex.image}}" style="width:100%; height:auto; position: relative; top: 0; left: 0; z-index: -1;">
               <div ng-show="varShowDeleteOptions">
