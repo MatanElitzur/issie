@@ -11,7 +11,8 @@ angular.module('gamesServicesModule').factory('ImageService', ['$q', function($q
         getAllImages: getAllImages,
         addImage: addImage,
         deleteImage: deleteImage,
-        addJsonFormat: addJsonFormat
+        addJsonFormat: addJsonFormat,
+        updateImage: updateImage
     };
 
     function initDB() {
@@ -21,9 +22,10 @@ angular.module('gamesServicesModule').factory('ImageService', ['$q', function($q
        /* On a mobile device the adapter will be displayed as websql even if it is using SQLite,
           so to confirm that it is actually using SQLite you'll have to do this*/
         _db.info().then(console.log.bind(console));
-
-        //_db.destroy();
-        //_db = new PouchDB('images', {adapter: 'websql'});
+       //To remove all content from DB remove comment from the following lines and deploy to device then
+       //commant the lines and again deploy to device
+       //_db.destroy();
+       //_db = new PouchDB('images', {adapter: 'websql'});
     };
 
     function addImage(imgObj) {
@@ -35,11 +37,22 @@ angular.module('gamesServicesModule').factory('ImageService', ['$q', function($q
         });
     };
 
-    function addJsonFormat(imageFullPath, imageFromJsonFile)
+    function updateImage(imgObj){
+      var imageToUpdate = addJsonFormat(imgObj.image, imgObj.imageFromJsonFile, imgObj.addToLottoGame, imgObj.addToMemoryGame);
+      $q.when(_db.put(imageToUpdate, imgObj._id,imgObj._rev)).then(function(succees){
+        console.log('Succeed to update image: ' + imgObj.image + " to pouchdb database");
+      }, function(error){
+        console.log('Failed to update image: ' + imgObj.image + " to pouchdb database "+ " Error: " + error);
+      });
+    }
+
+    function addJsonFormat(imageFullPath, imageFromJsonFile, addToLottoGame, addToMemoryGame)
     {
       var imgObj = {};
       imgObj.image = imageFullPath;
       imgObj.imageFromJsonFile = imageFromJsonFile;
+      imgObj.addToLottoGame = addToLottoGame;
+      imgObj.addToMemoryGame = addToMemoryGame;
       return imgObj;
     }
 

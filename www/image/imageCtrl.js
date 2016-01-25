@@ -150,7 +150,7 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
       //path, fileName, newPath, newFileName
       $cordovaFile.copyFile(nameOfFilePath, nameOfFile,  cordova.file.externalApplicationStorageDirectory, newNameOfFile)
         .then(function(info) {
-          ImageService.addImage(ImageService.addJsonFormat(cordova.file.externalApplicationStorageDirectory + newNameOfFile, false));
+          ImageService.addImage(ImageService.addJsonFormat(cordova.file.externalApplicationStorageDirectory + newNameOfFile, false, true, true));
           resolve();
         }, function(error) {
            var stringError = 'Failed to copy image: ' + imageUrl + " To cordova.file.dataDirectory " + cordova.file.dataDirectory + "new filename is: " + newNameOfFile + " Error: " + error;
