@@ -1,21 +1,11 @@
-angular.module('gamesServicesModule').factory('ImageService', ['$q', function($q) {
+angular.module('gamesServicesModule').service('ImageService', ['$q', '$http', function($q, $http) {
+    var imageService = this;
     var _db;
 
     // We'll need this later.
     var _images;
 
-    return {
-        initDB: initDB,
-
-        // We'll add these later.
-        getAllImages: getAllImages,
-        addImage: addImage,
-        deleteImage: deleteImage,
-        addJsonFormat: addJsonFormat,
-        updateImage: updateImage
-    };
-
-    function initDB() {
+  imageService.initDB  = function() {
         // Creates the database or opens if it already exists
         //Create a WebSQL-only Pouch (e.g. when using the SQLite Plugin for Cordova/PhoneGap):
         _db = new PouchDB('images', {adapter: 'websql'});
@@ -26,19 +16,21 @@ angular.module('gamesServicesModule').factory('ImageService', ['$q', function($q
        //commant the lines and again deploy to device
        //_db.destroy();
        //_db = new PouchDB('images', {adapter: 'websql'});
-    };
 
-    function addImage(imgObj) {
+      getAllImagesFromRepositories();
+  }
+
+  imageService.addImage = function(imgObj) {
         //with the post method, PouchDB will generate an _id for you
         $q.when(_db.post(imgObj)).then(function(succees){
           console.log('Succeed to add image: ' + imgObj.image + " to pouchdb database");
         }, function(error){
           console.log('Failed to add image: ' + imgObj.image + " to pouchdb database "+ " Error: " + error);
         });
-    };
+    }
 
-    function updateImage(imgObj){
-      var imageToUpdate = addJsonFormat(imgObj.image, imgObj.imageFromJsonFile, imgObj.addToLottoGame, imgObj.addToMemoryGame);
+  imageService.updateImage = function(imgObj){
+      var imageToUpdate = imageService.addJsonFormat(imgObj.image, imgObj.imageFromJsonFile, imgObj.addToLottoGame, imgObj.addToMemoryGame);
       $q.when(_db.put(imageToUpdate, imgObj._id,imgObj._rev)).then(function(succees){
         console.log('Succeed to update image: ' + imgObj.image + " to pouchdb database");
       }, function(error){
@@ -46,7 +38,7 @@ angular.module('gamesServicesModule').factory('ImageService', ['$q', function($q
       });
     }
 
-    function addJsonFormat(imageFullPath, imageFromJsonFile, addToLottoGame, addToMemoryGame)
+  imageService.addJsonFormat = function(imageFullPath, imageFromJsonFile, addToLottoGame, addToMemoryGame)
     {
       var imgObj = {};
       imgObj.image = imageFullPath;
@@ -56,11 +48,11 @@ angular.module('gamesServicesModule').factory('ImageService', ['$q', function($q
       return imgObj;
     }
 
-    function deleteImage(image) {
+  imageService.deleteImage = function(image) {
         return $q.when(_db.remove(image));
-    };
+    }
 
-    function getAllImages() {
+  imageService.getAllImagesFromDB = function() {
         if (!_images) {
             return $q.when(_db.allDocs({ include_docs: true}))
                 .then(function(docs) {
@@ -84,7 +76,7 @@ angular.module('gamesServicesModule').factory('ImageService', ['$q', function($q
             // Return cached data as a promise
             return $q.when(_images);
         }
-    };
+    }
 
     function onDatabaseChange(change) {
         var index = findIndex(_images, change.doc._id);
@@ -113,4 +105,53 @@ angular.module('gamesServicesModule').factory('ImageService', ['$q', function($q
         return low;
     }
 
+  function getAllImagesFromRepositories(){
+    getLottoImagesFromFS().then(function(imagesDataFromJson){
+      console.log('Success to get images from json file');
+      addLottoImagesFromJsonToDatabase(imagesDataFromJson).then(function(){
+        console.log('Success to add images to database');
+      }, function(error){
+        console.log('Failed to add images from json to database, Error: ' + error);
+      })
+    }, function(error){
+      console.log('Failed to get images from json file, Error: ' + error);
+    })
+  }
+
+  function getLottoImagesFromFS(){
+    var deferred = $q.defer();
+    /*return*/ $http.get('lottoGame/data.json')
+      .then(function(res){
+        //imagesDataFromJson = res.data.imagesData;
+        deferred.resolve(res.data.imagesData);
+      });
+    return deferred.promise;
+  }
+
+  function addLottoImagesFromJsonToDatabase(imagesDataFromJson){
+    var deferred = $q.defer();
+    imageService.getAllImagesFromDB().then(function(imagesFromDB){
+      for(var i = 0 ; i < imagesDataFromJson.length ; i++){
+        var nameOfFileFromJson = imagesDataFromJson[i].fileName.substr(imagesDataFromJson[i].fileName.lastIndexOf('/') + 1);
+        var imageExistsInDB = false;
+        for(var j = 0 ; j < imagesFromDB.length ; j++){
+          var nameOfFileFromDB = imagesFromDB[j].image.substr(imagesFromDB[j].image.lastIndexOf('/') + 1);
+          if(nameOfFileFromJson == nameOfFileFromDB){
+            //Image exists in DB
+            imageExistsInDB = true;
+            break;
+          }
+        }
+
+        if(imageExistsInDB == false){
+          //Add image to db
+          imageService.addImage(imageService.addJsonFormat('lottoGame/img/' + nameOfFileFromJson, true,
+            imagesDataFromJson[i].addToLottoGame,
+            imagesDataFromJson[i].addToMemoryGame));
+        }
+      }
+      deferred.resolve();
+    });
+    return deferred.promise;
+  }
 }]);

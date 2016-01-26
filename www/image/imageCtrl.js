@@ -36,7 +36,7 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
 
   vm.getImages = function() {
     var deferred = $q.defer();
-    ImageService.getAllImages().then(function(result){
+    ImageService.getAllImagesFromDB().then(function(result){
       vm.images = result;
       deferred.resolve();
     });
