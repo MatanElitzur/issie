@@ -1,5 +1,4 @@
-angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicker','$cordovaFile', 'ImageService', '$scope', 'MAX_NUMBER_OF_IMAGES_TO_ADD', '$ionicPopup', '$timeout', function( $q ,$cordovaImagePicker ,$cordovaFile, ImageService, $scope, MAX_NUMBER_OF_IMAGES_TO_ADD, $ionicPopup, $timeout){
-
+angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicker','$cordovaFile', 'ImageService', '$scope', 'MAX_NUMBER_OF_IMAGES_TO_ADD', '$ionicPopup', '$timeout', 'MEMORY_GAME_NAME', 'LOTTO_GAME_NAME', function( $q ,$cordovaImagePicker ,$cordovaFile, ImageService, $scope, MAX_NUMBER_OF_IMAGES_TO_ADD, $ionicPopup, $timeout, MEMORY_GAME_NAME, LOTTO_GAME_NAME){
   var vm = this;
   vm.images = [];
   var counterForDeleteButton = 0;
@@ -150,7 +149,10 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
       //path, fileName, newPath, newFileName
       $cordovaFile.copyFile(nameOfFilePath, nameOfFile,  cordova.file.externalApplicationStorageDirectory, newNameOfFile)
         .then(function(info) {
-          ImageService.addImage(ImageService.addJsonFormat(cordova.file.externalApplicationStorageDirectory + newNameOfFile, false, true, true));
+          var imageForGameObj = {};
+          imageForGameObj[LOTTO_GAME_NAME] = true;
+          imageForGameObj[MEMORY_GAME_NAME] = true;
+          ImageService.addImage(ImageService.addJsonFormat(cordova.file.externalApplicationStorageDirectory + newNameOfFile, false, imageForGameObj));
           resolve();
         }, function(error) {
            var stringError = 'Failed to copy image: ' + imageUrl + " To cordova.file.dataDirectory " + cordova.file.dataDirectory + "new filename is: " + newNameOfFile + " Error: " + error;

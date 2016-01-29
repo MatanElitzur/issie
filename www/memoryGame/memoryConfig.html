@@ -1,6 +1,18 @@
-<ion-view view-title="MemoryConfig">
-    <ion-header-bar class="bar-dark">
-        <h2 class="title">קונפיגורציה של משחק הזיכרון</h2>
-        <button class="button button-icon ion-images" ng-click="imagePicker();"></button>
-    </ion-header-bar>
+<ion-view view-title="MemoryConfig" ng-controller="MemoryConfigCtrl as vm" ng-init="vm.getImages()">
+  <div class="bar bar-header bar-calm">
+    <h1 class="title">קונפיגורציה של משחק הזיכרון</h1>
+    <a class="button icon-right ion-images" href="#/image">
+    </a>
+  </div>
+
+  <ion-content class="has-header" direction="y">
+    <div class="row imageStyle_Gallery">
+      <!-- filter: {addToGameObj: {memory: true}} -->
+      <div class="col col-33" ng-repeat="imageIndex in vm.images | displayMemoryImages">
+        <div ng-class="{&apos;addToMemoryGameCssClass&apos;: !imageIndex.addToGameObj.memory}" style="padding: 5px 5px 5px 5px; position: relative; left: 0; top: 0; background: greenyellow">
+          <img ng-src="{{imageIndex.image}}" ng-click="vm.toggleImage(imageIndex)" style="width:100%; height:auto; position: relative; top: 0; left: 0;">
+        </div>
+      </div>
+    </div>
+  </ion-content>
 </ion-view>

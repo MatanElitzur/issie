@@ -1,26 +1,54 @@
 { "imagesData" : [
   {
-    "fileName":"Barot_Bellingham_tn.jpg"
+    "fileName":"memoryImage_Barot_Bellingham_tn.jpg",
+    "addToGame": true
   },
   {
-    "fileName":"Jonathan_Ferrar_tn.jpg"
+    "fileName":"memoryImage_Jonathan_Ferrar_tn.jpg",
+    "addToGame": true
   },
   {
-    "fileName":"Hillary_Goldwynn_tn.jpg"
+    "fileName":"memoryImage_Hillary_Goldwynn_tn.jpg",
+    "addToGame": true
   },
   {
-    "fileName":"Hassum_Harrod_tn.jpg"
+    "fileName":"memoryImage_Hassum_Harrod_tn.jpg",
+    "addToGame": true
   },
   {
-    "fileName":"Jennifer_Jerome_tn.jpg"
+    "fileName":"memoryImage_Jennifer_Jerome_tn.jpg",
+    "addToGame": true
   },
   {
-    "fileName":"LaVonne_LaRue_tn.jpg"
+    "fileName":"memoryImage_LaVonne_LaRue_tn.jpg",
+    "addToGame": true
   },
   {
-    "fileName":"Constance_Smith_tn.jpg"
+    "fileName":"memoryImage_Constance_Smith_tn.jpg",
+    "addToGame": true
   },
   {
-    "fileName":"Xhou_Ta_tn.jpg"
+    "fileName":"memoryImage_Xhou_Ta_tn.jpg",
+    "addToGame": true
+  },
+  {
+    "fileName":"memoryImage_Riley_Rewington_tn.jpg",
+    "addToGame": true
+  },
+  {
+    "fileName":"memoryImage_minion1.jpg",
+    "addToGame": true
+  },
+  {
+    "fileName":"memoryImage_minion2.jpg",
+    "addToGame": true
+  },
+  {
+    "fileName":"memoryImage_minion3.jpg",
+    "addToGame": true
+  },
+  {
+    "fileName":"memoryImage_minion4.jpg",
+    "addToGame": true
   }
 ]}

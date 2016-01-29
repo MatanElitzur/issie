@@ -1,1 +1,1 @@
-angular.module('homeModule', ['ionic']);
+angular.module('homeModule', []);
