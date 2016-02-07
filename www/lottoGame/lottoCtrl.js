@@ -26,7 +26,7 @@ app.controller('LottoCtrl',  function($scope, $ionicGesture, $http,$window, $ion
     $scope.pairImage = document.getElementById(tempId);
     var tempSrc = $scope.pairImage.src;
     tempImg.src = tempSrc;
-    var directoryReader = fs.root.createReader();
+    //var directoryReader = fs.root.createReader();
 
 
   });
