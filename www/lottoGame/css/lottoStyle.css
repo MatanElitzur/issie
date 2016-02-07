@@ -1,10 +1,6 @@
 img.lotto {
   border: 1px solid #cccccc;
   padding : 10px 10px 10px 10px;
-
-
-  position:relative;
-  display:inline-block;
   -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,1), inset 0 2px 1px rgba(255,255,255,.5), inset 0 -9px 2px rgba(0,0,0,.6), inset 0 -12px 2px rgba(255,255,255,.3);
   -moz-box-shadow: inset 0 0 4px rgba(0,0,0,1), inset 0 2px 1px rgba(255,255,255,.5), inset 0 -9px 2px rgba(0,0,0,.6), inset 0 -12px 2px rgba(255,255,255,.3);
   box-shadow: inset 0 0 4px rgba(0,0,0,1), inset 0 2px 1px rgba(255,255,255,.5), inset 0 -9px 2px rgba(0,0,0,.6), inset 0 -12px 2px rgba(255,255,255,.3);
@@ -12,45 +8,27 @@ img.lotto {
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius: 20px;
-  width: 90%;
-  height: 90%;
 }
 div.lotto{
 
   width: 100%;
-  height: 60%;
-
-}
-div.inner_lotto{
-  position: relative;
-
-  width: 33%;
-  height: 33%;
-}
-
-ul.lotto{
-  margin : 10px 10px 10px 10px;
-  width: 100%;
-  height: 100%;
-}
-li.lotto{
-
-  width: 100%;
-  height: 100%;
-}
-
-
-div.bottom_lotto{
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 40%;
+  height: 80%;
+  flex-wrap: wrap;
+  border: outset;
   padding : 10px 10px 10px 10px;
+  border: solid 1px #555;
+  background-color: #eed;
+  box-shadow: 0 0 10px rgba(0,0,0,0.6);
+  -moz-box-shadow: 0 0 10px rgba(0,0,0,0.6);
+  -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.6);
+  -o-box-shadow: 0 0 10px rgba(0,0,0,0.6);
+
 }
+
 img.refresh {
   border: 1px solid #cccccc;
   padding : 10px 10px 10px 10px;
-  margin-left: 5%;
+
 
   -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,1), inset 0 2px 1px rgba(255,255,255,.5), inset 0 -9px 2px rgba(0,0,0,.6), inset 0 -12px 2px rgba(255,255,255,.3);
   -moz-box-shadow: inset 0 0 4px rgba(0,0,0,1), inset 0 2px 1px rgba(255,255,255,.5), inset 0 -9px 2px rgba(0,0,0,.6), inset 0 -12px 2px rgba(255,255,255,.3);
@@ -59,10 +37,5 @@ img.refresh {
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius: 20px;
-  width: 20%;
-  height: 40%;
-  float: left;
-  display: block;
-  margin-top: 8%;
 
 }
