@@ -48,7 +48,6 @@ app.controller('LottoCtrl',  function(ImageService,$scope, $window, $ionicPlatfo
 
   $scope.evaluate = function evaluate($event) {
     if ($event.currentTarget.id == $scope.pairImage.id) {
-      alert("bravooo");
       $scope.removedPictures.push($scope.pairImage.id.toString());
       var imageToRemove = document.getElementById($scope.pairImage.id);
       $scope.addedPictures.splice($scope.addedPictures.indexOf($scope.pairImage.id.toString()), 1);
@@ -62,6 +61,18 @@ app.controller('LottoCtrl',  function(ImageService,$scope, $window, $ionicPlatfo
       else {
         $scope.refresh();
       }
+    }else{
+      var highlightBack = move(document.getElementById($event.currentTarget.id))
+        .set('background', document.getElementById($event.currentTarget.id).style.background)
+        .duration('0.2s')
+        .end();
+
+      var highlight = move(document.getElementById($event.currentTarget.id))
+        .set('background', '#B9F6CA')
+        .duration('0.2s')
+        .then(highlightBack)
+        .end();
+
     }
   }
 
