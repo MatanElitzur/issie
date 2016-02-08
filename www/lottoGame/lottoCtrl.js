@@ -1,7 +1,8 @@
-app.controller('LottoCtrl',  function(ImageService,$scope, $ionicGesture, $http,$window, $ionicPlatform, $timeout) {
+app.controller('LottoCtrl',  function(ImageService,$scope, $window, $ionicPlatform,$ionicHistory) {
 
-  $scope.$on('$ionicView.enter', function refreshImage() {
-
+  $scope.$on('$ionicView.loaded', function refreshImage() {
+    $ionicHistory.clearCache();
+    $ionicHistory.clearHistory();
     $scope.removedPictures = Array();
     $scope.addedPictures = Array();
     $scope.imagesData = Array();
@@ -51,12 +52,33 @@ app.controller('LottoCtrl',  function(ImageService,$scope, $ionicGesture, $http,
       $scope.removedPictures.push($scope.pairImage.id.toString());
       var imageToRemove = document.getElementById($scope.pairImage.id);
       $scope.addedPictures.splice($scope.addedPictures.indexOf($scope.pairImage.id.toString()), 1);
-      imageToRemove.parentElement.removeChild(imageToRemove);
-      if ($scope.addedPictures.length == 0) alert("Finishhh!!!");
+      var imageContainer = imageToRemove.parentElement;
+      imageContainer.removeChild(imageToRemove);
+      if ($scope.addedPictures.length == 0) {
+        alert("Finishhh!!!");
+        $scope.initialize();
+        $window.location.reload(true);
+      }
       else {
         $scope.refresh();
       }
     }
+  }
+
+  $scope.initialize = function initialize(){
+    for(i=0; i<$scope.imagesData.length;i++)
+    {
+      $scope.addedPictures.push($scope.imagesData[i].id.toString());
+    }
+    $scope.removedPictures = [];
+    var tempImg = document.getElementById("tempimg").getElementsByTagName("img")[1];
+    $scope.pairImage = $scope.imagesData[Math.floor(Math.random() * $scope.imagesData.length)];
+    var tempId = $scope.pairImage.id;
+    tempImg.id = 'gen' + tempId;
+
+    tempImg.className = 'lotto';
+    var tempSrc = $scope.pairImage.image;
+    tempImg.src = tempSrc;
   }
 
 });
