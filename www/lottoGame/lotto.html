@@ -1,25 +1,22 @@
 <ion-view view-title="Lotto">
-  <div class="col responsive-sm" style="height: 100%">
+  <div class="col responsive-sm parent" style="height: 100%">
 
 
     <div id = "gameImages" class="row lotto responsive-sm">
-      <div  class="col col-33 responsive-sm" ng-repeat="image in imagesData | filter: {addToGameObj: {lotto: true}}">
-        <img id="{{image.id}}" class="lotto" ng-src="{{image.image}}"
-             ng-click="evaluate($event)"/>
 
-      </div>
+        <img id="{{image.id}}" class="lotto col col-33 responsive-sm" ng-src="{{image.image}}"
+             ng-click="evaluate($event)" ng-repeat="image in imagesData | filter: {addToGameObj: {lotto: true}}"/>
+
     </div>
 
 
-    <div id="tempimg" class="row row-bottom responsive-sm">
-      <div class="col col-33 responsive-sm">
-        <img id="refresh" class="refresh"
+    <div id="tempimg" class="row bottom responsive-sm">
+
+        <img id="refresh" class="lotto col col-33 responsive-sm"
              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVP3rekkouYBnWZrvv_5nhnf8VOHKM4oYQ4vazRgo_FOUmdYTECw"
              ng-click="refresh()"/>
-      </div>
-      <div class="col col-33 responsive-sm">
-        <img id="tempid"/>
-      </div>
+        <img id="tempid" class="lotto col col-33 responsive-sm"/>
+
     </div>
   </div>
 </ion-view>

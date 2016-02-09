@@ -23,7 +23,6 @@ app.controller('LottoCtrl',  function(ImageService,$scope, $window, $ionicPlatfo
       var tempId = $scope.pairImage.id;
       tempImg.id = 'gen' + tempId;
 
-      tempImg.className = 'lotto';
       var tempSrc = $scope.pairImage.image;
       tempImg.src = tempSrc;
     });
