@@ -1,11 +1,16 @@
 <ion-view view-title="Lotto">
-  <div class="col responsive-sm parent" style="height: 100%">
+  <div class="bar bar-header bar-positive">
+    <a class="button button-icon icon ion-settings" href="#/lottoconfig"></a>
+    <h1 class="title">Lotto game</h1>
+  </div>
+
+  <div class="col responsive-sm parent" style="margin-top: 2%">
 
 
     <div id = "gameImages" class="row lotto responsive-sm">
 
         <img id="{{image.id}}" class="lotto col col-33 responsive-sm" ng-src="{{image.image}}"
-             ng-click="evaluate($event)" ng-repeat="image in imagesData | filter: {addToGameObj: {lotto: true}}"/>
+             ng-click="evaluate($event)" ng-repeat="image in imagesData "/>
 
     </div>
 
@@ -21,6 +26,7 @@
      </div>
     </div>
   </div>
+
 </ion-view>
 
 <script src="lottoModule.js"></script>
