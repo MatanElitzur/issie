@@ -11,7 +11,7 @@ app.controller('LottoCtrl',  function(ImageService,$scope, $window, $ionicPlatfo
       for(i=0; i<result.length;i++)
       {
         var currentImage = result[i];
-        if(currentImage.addToGameObj.lotto) {
+        if(currentImage.addToGameObj.lotto!=undefined) {
           currentImage.id = index;
           $scope.addedPictures.push(index.toString());
           index++;
@@ -55,7 +55,7 @@ app.controller('LottoCtrl',  function(ImageService,$scope, $window, $ionicPlatfo
       if ($scope.addedPictures.length == 0) {
         alert("Finishhh!!!");
         $scope.initialize();
-        $window.location.reload(true);
+
       }
       else {
         $scope.refresh();
@@ -89,6 +89,7 @@ app.controller('LottoCtrl',  function(ImageService,$scope, $window, $ionicPlatfo
     tempImg.className = 'lotto';
     var tempSrc = $scope.pairImage.image;
     tempImg.src = tempSrc;
+    $window.location.reload(true);
   }
 
 });
