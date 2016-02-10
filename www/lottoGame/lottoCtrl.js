@@ -20,9 +20,7 @@ app.controller('LottoCtrl',  function(ImageService,$scope, $window, $ionicPlatfo
         }
       }
       tempImg = document.getElementById("tempimg").getElementsByTagName("img")[1];
-      pairImage = $scope.imagesData[Math.floor(Math.random() * $scope.imagesData.length)];
-      tempImg.id = 'gen' + pairImage.id;
-      tempImg.src = pairImage.image;
+      firstImage();
 
     });
 
@@ -49,7 +47,7 @@ app.controller('LottoCtrl',  function(ImageService,$scope, $window, $ionicPlatfo
       imageContainer.removeChild(imageToRemove);
       if (displayedPicturesIndexes.length == 0) {
         alert("Finishhh!!!");
-        $scope.initialize();
+        $scope.restart();
 
       }
       else {
@@ -70,7 +68,7 @@ app.controller('LottoCtrl',  function(ImageService,$scope, $window, $ionicPlatfo
     }
   }
 
-  $scope.initialize = function initialize(){
+  $scope.restart = function restart(){
     shuffle($scope.imagesData);
     displayedPicturesIndexes = [];
     removedPicturesIndexes = [];
@@ -78,6 +76,10 @@ app.controller('LottoCtrl',  function(ImageService,$scope, $window, $ionicPlatfo
     {
          displayedPicturesIndexes.push($scope.imagesData[i].id.toString());
     }
+    firstImage();
+  }
+
+  var firstImage = function firstImage(){
     pairImage = $scope.imagesData[Math.floor(Math.random() * $scope.imagesData.length)];
     tempImg.id = 'gen' + pairImage.id;
     tempImg.src = pairImage.image;
