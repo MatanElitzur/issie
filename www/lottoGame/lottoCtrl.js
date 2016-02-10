@@ -19,26 +19,27 @@ app.controller('LottoCtrl',  function(ImageService,$scope, $window, $ionicPlatfo
         }
       }
       tempImg = document.getElementById("tempimg").getElementsByTagName("img")[1];
-      var pairImage = $scope.imagesData[Math.floor(Math.random() * $scope.imagesData.length)];
-      var tempId = pairImage.id;
+      $scope.pairImage = $scope.imagesData[Math.floor(Math.random() * $scope.imagesData.length)];
+      var tempId = $scope.pairImage.id;
       tempImg.id = 'gen' + tempId;
 
-      var tempSrc = pairImage.image;
+      var tempSrc = $scope.pairImage.image;
       tempImg.src = tempSrc;
+
     });
 
   });
 
 
-  $scope.refresh = function refreshImage() {
+  $scope.pickImage = function pickImage() {
     var lastId = tempImg.id.split('gen')[1];
-    var totalPictures = displayedPicturesIndexes.length;
-    tempId = displayedPicturesIndexes[Math.floor(Math.random() * totalPictures)];
+    tempId = displayedPicturesIndexes[Math.floor(Math.random() * displayedPicturesIndexes.length)];
     while (tempId == lastId || removedPicturesIndexes.indexOf(tempId) > -1)
-      tempId = displayedPicturesIndexes[Math.floor(Math.random() * totalPictures)];
+      tempId = displayedPicturesIndexes[Math.floor(Math.random() * displayedPicturesIndexes.length)];
     tempImg.id = 'gen' + tempId;
-    tempImg.src = document.getElementById(tempId).src;
     pairImage = document.getElementById(tempId);
+    tempImg.src = pairImage.src;
+
   };
 
   $scope.evaluate = function evaluate($event) {
@@ -54,7 +55,7 @@ app.controller('LottoCtrl',  function(ImageService,$scope, $window, $ionicPlatfo
 
       }
       else {
-        $scope.refresh();
+        $scope.pickImage();
       }
     }else{
       var highlightBack = move(document.getElementById($event.currentTarget.id))
