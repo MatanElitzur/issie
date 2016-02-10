@@ -28,14 +28,17 @@ app.controller('LottoCtrl',  function(ImageService,$scope, $window, $ionicPlatfo
 
 
   $scope.pickImage = function pickImage() {
-    var lastId = tempImg.id.split('gen')[1];
-    var tempId = displayedPicturesIndexes[Math.floor(Math.random() * displayedPicturesIndexes.length)];
-    while (tempId == lastId || removedPicturesIndexes.indexOf(tempId) > -1)
-      tempId = displayedPicturesIndexes[Math.floor(Math.random() * displayedPicturesIndexes.length)];
-    tempImg.id = 'gen' + tempId;
+    if(displayedPicturesIndexes.length==1){
+      tempId = displayedPicturesIndexes[0];
+    }else {
+      var lastId = tempImg.id.split('gen')[1];
+      var tempId = displayedPicturesIndexes[Math.floor(Math.random() * displayedPicturesIndexes.length)];
+      while (tempId == lastId || removedPicturesIndexes.indexOf(tempId) > -1)
+        tempId = displayedPicturesIndexes[Math.floor(Math.random() * displayedPicturesIndexes.length)];
+      tempImg.id = 'gen' + tempId;
+    }
     pairImage = document.getElementById(tempId);
     tempImg.src = pairImage.src;
-
   };
 
   $scope.evaluate = function evaluate($event) {
@@ -48,7 +51,6 @@ app.controller('LottoCtrl',  function(ImageService,$scope, $window, $ionicPlatfo
       if (displayedPicturesIndexes.length == 0) {
         alert("Finishhh!!!");
         $scope.restart();
-
       }
       else {
         $scope.pickImage();
