@@ -2,6 +2,7 @@ app.controller('LottoCtrl',  function(ImageService,$scope, $window, $ionicPlatfo
   var removedPicturesIndexes = Array(); //removed pictures indexes
   var displayedPicturesIndexes = Array();  //displayed pictures indexes
   var tempImg;
+  var pairImage;
   $scope.$on('$ionicView.loaded', function refreshImage() {
 
 
@@ -19,12 +20,9 @@ app.controller('LottoCtrl',  function(ImageService,$scope, $window, $ionicPlatfo
         }
       }
       tempImg = document.getElementById("tempimg").getElementsByTagName("img")[1];
-      $scope.pairImage = $scope.imagesData[Math.floor(Math.random() * $scope.imagesData.length)];
-      var tempId = $scope.pairImage.id;
-      tempImg.id = 'gen' + tempId;
-
-      var tempSrc = $scope.pairImage.image;
-      tempImg.src = tempSrc;
+      pairImage = $scope.imagesData[Math.floor(Math.random() * $scope.imagesData.length)];
+      tempImg.id = 'gen' + pairImage.id;
+      tempImg.src = pairImage.image;
 
     });
 
@@ -33,7 +31,7 @@ app.controller('LottoCtrl',  function(ImageService,$scope, $window, $ionicPlatfo
 
   $scope.pickImage = function pickImage() {
     var lastId = tempImg.id.split('gen')[1];
-    tempId = displayedPicturesIndexes[Math.floor(Math.random() * displayedPicturesIndexes.length)];
+    var tempId = displayedPicturesIndexes[Math.floor(Math.random() * displayedPicturesIndexes.length)];
     while (tempId == lastId || removedPicturesIndexes.indexOf(tempId) > -1)
       tempId = displayedPicturesIndexes[Math.floor(Math.random() * displayedPicturesIndexes.length)];
     tempImg.id = 'gen' + tempId;
@@ -81,11 +79,8 @@ app.controller('LottoCtrl',  function(ImageService,$scope, $window, $ionicPlatfo
          displayedPicturesIndexes.push($scope.imagesData[i].id.toString());
     }
     pairImage = $scope.imagesData[Math.floor(Math.random() * $scope.imagesData.length)];
-    var tempId = pairImage.id;
-    tempImg.id = 'gen' + tempId;
-
-    var tempSrc = pairImage.image;
-    tempImg.src = tempSrc;
+    tempImg.id = 'gen' + pairImage.id;
+    tempImg.src = pairImage.image;
   }
 
   var shuffle = function shuffle(array){
