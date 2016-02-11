@@ -1,61 +1,30 @@
- <ion-view view-title="Home">
+ <ion-view view-title="Home" ng-controller="HomeCtrl as vm">
+   <div class="bar bar-header bar-positive">
+     <h1 class="title"> משחקי בית איזי שפירא </h1>
+     <a class="button button-icon icon ion-settings" href="#/image"></a>
+   </div>
 
-		<button class="button" ng-click="test()">
-			I'm a button on the primary of the navbar!
-		  </button>
+   <ion-content class="has-header">
+     <div align="center" ng-class="{&apos;animated hinge&apos;: vm.animateMemoryGame}">
+       <a on-tap="vm.navigateMemory();">
+         <h1 class="site__title mega"> משחק הזיכרון </h1>
+       </a>
+     </div>
 
-		 <a class="item item-icon-left" href="#/image">
-			 <i class="ion-images"></i>
-			 תמונות
-		 </a>
+     <div align="center" ng-class="{&apos;animated hinge&apos;: vm.animateLottoGame}">
+       <a on-tap="vm.navigateLotto('lotto');">
+         <h1 class="site__title mega"> משחק לוטו </h1>
+       </a>
+     </div>
+   </ion-content>
 
-   <a class="item item-icon-left" href="#/lottoConfig">
-     <i class="ion-images"></i>
-     Lotto Config
-   </a>
+<!--
 
-   <a class="item item-icon-left" href="#/memoryConfig">
-     <i class="ion-images"></i>
-     Memory Config
-   </a>
-
-	<!--
-		<ion-item href="#/memory">
-			<img ng-src="home/img/memory.gif" alt="משחק הזיכרון" />
-		</ion-item>
-		<ion-item href="#/lotto">
-			<img ng-src="home/img/lotto.jpg" alt="לוטו" />
-		</ion-item>
-		-->
-		<ion-item href="#/memory">
-			<img ng-src={{memoryImgPath}} alt="משחק הזיכרון" />
-		</ion-item>
-		<ion-item href="#/lotto">
-			<img ng-src={{lottoImgPath}} alt="לוטו" />
-		</ion-item>
-	</ion-list>
-
-	  </div>
+	<ion-item href="#/memory">
+		<img ng-src={{memoryImgPath}} alt="משחק הזיכרון" />
+	</ion-item>
+	<ion-item href="#/lotto">
+		<img ng-src={{lottoImgPath}} alt="לוטו" />
+	</ion-item>
+-->
 </ion-view>
-
-	<!--
-	<ion-nav-view name="index">
-	Home
-
-
-	<ion-pane>
-      <ion-header-bar class="bar-stable">
-        <h1 class="title">Ionic Blank Starter</h1>
-      </ion-header-bar>
-      <ion-content>
-      </ion-content>
-    </ion-pane>
-
-
-
-
-
-	</ion-nav-view>
-
-	ng-controller = 'HomeCtrl'
-	-->
