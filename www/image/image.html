@@ -1,5 +1,6 @@
 <ion-view view-title="Image" ng-controller="ImageCtrl as vm" ng-init="vm.getImages()">
     <div class="bar bar-header bar-calm">
+      <a class="button button-icon icon ion-ios-arrow-back" on-tap="vm.goBack()"></a>
       <button class="button icon-left ion-trash-a" ng-click="vm.showDeleteOptions()" ng-hide="varShowDeleteOptions"></button>
         <h1 class="title">
 תמונות</h1>

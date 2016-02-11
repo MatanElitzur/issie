@@ -1,3 +1,8 @@
 .addToMemoryGameCssClass{
   background: red !important;
 }
+
+.imageStyle_Gallery {
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+}

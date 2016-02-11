@@ -14,7 +14,7 @@ angular.module('memoryConfigModule')
     };
   }])
 
-  .controller('MemoryConfigCtrl', ['$scope', 'ImageService', function($scope, ImageService){
+  .controller('MemoryConfigCtrl', ['$scope', 'ImageService', '$ionicHistory', function($scope, ImageService, $ionicHistory){
   var vm = this;
   vm.images = [];
 
@@ -29,4 +29,9 @@ angular.module('memoryConfigModule')
     });
   }
 
-}]);
+   vm.goBack = function(){
+     $ionicHistory.goBack();
+   }
+
+
+  }]);

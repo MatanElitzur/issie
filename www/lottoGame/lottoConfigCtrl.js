@@ -14,10 +14,14 @@ angular.module('lottoConfigModule')
             return out;
         };
   }])
-  .controller('LottoConfigCtrl', ['ImageService' ,'$scope', function(ImageService, $scope) {
+  .controller('LottoConfigCtrl', ['ImageService', '$ionicHistory', function(ImageService, $ionicHistory) {
 
   var vm = this;
   vm.images = [];
+
+   vm.goBack = function(){
+      $ionicHistory.goBack();
+   }
 
   vm.toggleImage = function(imageObj){
     imageObj.addToGameObj.lotto = !imageObj.addToGameObj.lotto;

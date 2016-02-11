@@ -1,125 +1,47 @@
-angular.module('memoryModule').controller('MemoryCtrl', ['$scope', '$http', 'jsonLoaderService', function($scope, $http, jsonLoaderService){
-  $scope.images = [];
-  $scope.flipedImages = [];
-  $scope.firstStep = null;
-  $scope.secondStep = null;
-  $scope.numberOfPairs = 0;
-  $scope.maxNumberOfPairs = 8
+angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$timeout', '$ionicPlatform', '$cordovaNativeAudio', '$ionicHistory', '$ionicPopup' , function( ImageService, $timeout, $ionicPlatform, $cordovaNativeAudio, $ionicHistory, $ionicPopup){
+  var vm = this;
+  vm.memoryImagesMatrix = [];
+  var firstImage = null;
+  var secondImage = null;
+  var imagesData = null;
+  var flippedImage = "./memoryGame/coverImg/coverImage.png";
 
-  $scope.flippedImage = "http://placehold.it/50x50";
-  //$scope.flippedImage = "https://static-s.aa-cdn.net/img/ios/348862738/d3649f309860422d070114af40962512";
+  $ionicPlatform.ready(function() {
+    $cordovaNativeAudio.preloadSimple('imagesPaired', 'audio/tada.mp3');
+    $cordovaNativeAudio.preloadSimple('failedImagesPairing', 'audio/MirrorShattering.mp3');
+  });
 
-  $scope.loadImages = function() {
-    for(var i = 0; i < 16; i++) {
-      $scope.images.push({id: i, src:  $scope.flippedImage});
-      //$scope.images.push({id: i, src: "./memoryGame/img/Barot_Bellingham_tn.jpg"});
-    }
+  vm.goBack = function(){
+    $ionicHistory.goBack();
   }
 
-
-  $scope.Step = function(src, idx) {
-    this.src = src;
-    this.idx = idx;
-  }
-
-  $scope.toggleImage = function(image) {
-    var tileIndex = event.toElement.id;
-    var curImg=  $scope.images[tileIndex];
-    if(curImg.src === $scope.flippedImage) {
-      //curImg.src = "./memoryGame/img/Barot_Bellingham_tn.jpg";
-      curImg.src = $scope.flipedImages[tileIndex].src;
-    } else {
-      curImg.src = $scope.flippedImage;
-    }
-  };
-
-  $scope.toggleImage2 = function(image) {
-
-    if (($scope.firstStep != null) && ($scope.secondStep != null))
-    {
-      var frstIndex = $scope.firstStep.idx;
-      $scope.images[frstIndex].src = $scope.flippedImage;
-      var secIndex = $scope.secondStep.idx;
-      $scope.images[secIndex].src = $scope.flippedImage;
-      $scope.firstStep = null;
-      $scope.secondStep = null;
-
-    }
-    var tileIndex = event.toElement.id;
-    var curImg=  $scope.images[tileIndex];
-    if(($scope.firstStep ==null) && ($scope.isFlipped(curImg)))
-    {
-      curImg.src = $scope.flipedImages[tileIndex].src;
-      $scope.firstStep = new $scope.Step(curImg.src,tileIndex);
-    }
-    else{
-      if(($scope.secondStep ==null) && ($scope.isFlipped(curImg)))
-      {
-        curImg.src = $scope.flipedImages[tileIndex].src;
-        if ($scope.firstStep.src == curImg.src)
-        {
-          $scope.numberOfPairs++;
-          $scope.firstStep = null;
-          $scope.secondStep = null;
-          if ($scope.numberOfPairs == $scope.maxNumberOfPairs)
-          {
-            alert('You Win');
-          }
-        }
-        else
-        {
-          curImg.src = $scope.flipedImages[tileIndex].src;
-          $scope.secondStep = new $scope.Step(curImg.src,tileIndex);
-          //wait for three seconds;
-          setTimeout(function () {var a =1;}, 3000);
-          //curImg.src = $scope.flippedImage;
-          //var firstIndex = $scope.firstStep.idx;
-          //$scope.images[firstIndex].src = $scope.flippedImage;
-          //$scope.firstStep = null;
-          //$scope.secondStep = null;
-
-
-        }
-
-      }
-
-    }
-  };
-
-  $scope.isFlipped = function(image)
-  {
-    return image.src === $scope.flippedImage;
-  }
-
-
-
-
-
-
-  $http.get('./memoryGame/data.json')
-    .then(function(res){
-      $scope.imagesData = res.data.imagesData;
-      //$scope.makeGrid($scope.imagesData);
-      for(var i = 0; i < $scope.imagesData.length; i++) {
-        var imgSrc = "./memoryGame/img/" + $scope.imagesData[i].fileName;
-        $scope.flipedImages.push({id: i*2, src:  imgSrc});
-        $scope.flipedImages.push({id: i*2+1, src:  imgSrc});
-      }
-      $scope.flipedImages =  $scope.shuffle($scope.flipedImages);
+  vm.getImages = function(){
+    ImageService.getAllImagesFromDB().then(function(result){
+      imagesData = result;
+      initMemoryImagesMatrix();
     });
+  }
 
+  function initMemoryImagesMatrix(){
+    var j = -1;
+    vm.memoryImagesMatrix = [];
+    for(var i = 0; i < imagesData.length; i++) {
+      if(imagesData[i].addToGameObj.memory){
+        vm.memoryImagesMatrix.push({index: ++j, src:  flippedImage, image: imagesData[i].image, isPaired: false, isFlipped: false });
+        vm.memoryImagesMatrix.push({index: ++j, src:  flippedImage, image: imagesData[i].image, isPaired: false, isFlipped: false });
+      }
+    }
+    vm.memoryImagesMatrix =  shuffle(vm.memoryImagesMatrix);
+  }
 
-  $scope.shuffle = function (array) {
+  function shuffle(array) {
     var counter = array.length, temp, index;
-
     // While there are elements in the array
     while (counter > 0) {
       // Pick a random index
       index = Math.floor(Math.random() * counter);
-
       // Decrease counter by 1
       counter--;
-
       // And swap the last element with it
       temp = array[counter];
       array[counter] = array[index];
@@ -129,73 +51,109 @@ angular.module('memoryModule').controller('MemoryCtrl', ['$scope', '$http', 'jso
     return array;
   }
 
-/*
+   function Step(src, index) {
+    this.src = src;
+    this.index = index;
+  }
 
- $scope.Tile = function(title) {
- this.title = title;
- this.flipped = false;
- }
-  $scope.makeDeck = function(tileNames) {
-    var tileDeck = [];
-    tileNames.forEach(function(name) {
-      tileDeck.push(new Tile(name.fileName));
-      tileDeck.push(new Tile(name.fileName));
-    });
+  vm.toggleImage = function(image) {
+      if(!image.isPaired){
+          if((firstImage == null) && (!image.isFlipped)){
+            image.src = image.image;
+            image.isFlipped = true;
+            firstImage = image;
+          }
+          else if((firstImage != null) && (secondImage == null) && (!image.isFlipped)) {
+            image.src = image.image;
+            image.isFlipped = true;
+            secondImage = image;
+            //checkIfImagesAreEqual;
+            if(firstImage.src === secondImage.src){
+               theImagesAreEqual(image);
+            }
+            else {
+               theImagesAreNotEqual(image);
+            }
+          }
+      }
+  }
 
-    return tileDeck;
+  function theImagesAreEqual(image){
+      $timeout(function(){
+      $cordovaNativeAudio.play('imagesPaired');
+      image.isPaired = true;
+      image.animate = true;
+      setImageInMatrixAsPaired(firstImage.index);
+      initImages();
+      //TODO: Animation for success
+      if(isAllImagesPaired()) {
+        shuffleImagesToPlayAgainPopup();
+      }
 
-  $scope.makeGrid = function(tileDeck) {
-    var gridDimension = Math.sqrt(tileDeck.length),
-      grid = [];
+    }, 500);
+  }
 
-    for (var row = 0; row < gridDimension; row++) {
-      grid[row] = [];
-      for (var col = 0; col < gridDimension; col++) {
-        grid[row][col] = $scope.removeRandomTile(tileDeck);
+  function isAllImagesPaired() {
+    var gameOver = true;
+    for(var i = 0 ; i < vm.memoryImagesMatrix.length ; i++){
+      if(vm.memoryImagesMatrix[i].isPaired === false){
+        gameOver = false;
+        break;
       }
     }
 
-    return grid;
+    return gameOver;
+  }
+
+  function shuffleImagesToPlayAgainPopup() {
+    var gameOverPopup = $ionicPopup.confirm({
+      title: "<div class='icon ion-happy-outline'> כל הכבוד </div>" ,
+      okText: ' שחק שוב '
+    });
+
+    gameOverPopup.then(function(res) {
+      if(res) {
+        initMemoryImagesMatrix();
+        vm.memoryImagesMatrix = shuffle(vm.memoryImagesMatrix);
+      }
+    });
+  }
+
+  function theImagesAreNotEqual(image){
+      $timeout(function(){
+      //The images are not equal
+      $cordovaNativeAudio.play('failedImagesPairing');
+      image.src = flippedImage;
+      image.isFlipped = false;
+      setImageAsFlippedImage(firstImage.index);
+      initImages();
+    }, 1000);
+  }
+
+  function initImages(){
+    firstImage = null;
+    secondImage = null;
+  }
+
+  function setImageInMatrixAsPaired(indexOfImage){
+      for(var i = 0 ; i < vm.memoryImagesMatrix.length ; i++){
+           if(vm.memoryImagesMatrix[i].index === indexOfImage){
+             vm.memoryImagesMatrix[i].isPaired = true;
+             vm.memoryImagesMatrix[i].animate = true;
+             break;
+           }
+      }
+  }
+
+  function setImageAsFlippedImage(indexOfImage){
+    for(var i = 0 ; i < vm.memoryImagesMatrix.length ; i++){
+      if(vm.memoryImagesMatrix[i].index === indexOfImage){
+        vm.memoryImagesMatrix[i].src = flippedImage;
+        vm.memoryImagesMatrix[i].isFlipped = false;
+        break;
+      }
+    }
   }
 
 
-  $scope.removeRandomTile = function(tileDeck) {
-    var i = Math.floor(Math.random()*tileDeck.length);
-    return tileDeck.splice(i, 1)[0];
-  }
-*/
-
-
-
-
-  $scope.imagesData = jsonLoaderService.loadJson('memoryGame/data.json');
-	$http.get('js/data.json').success(function(data){
-		$scope.artists = data.speakers;
-
-
-
-
-
-		$scope.onItemDelete = function(item){
-			$scope.artists.splice($scope.artists.indexOf(item), 1);
-		}
-
-		$scope.doRefresh = function(){
-        $http.get('js/data.json').success(function(data){
-				$scope.artists = data.speakers;
-				$scope.$broadcast('scroll.refreshComplete');
-			});
-		}
-
-		$scope.toggleStar = function(item){
-			item.star = !item.star;
-		}
-
-		$scope.moveItem = function(item, fromIndex, toIndex){
-			$scope.artists.splice(fromIndex ,1 );
-			$scope.artists.splice(toIndex, 0 , item );
-		}
-
-
-	});
 }]);

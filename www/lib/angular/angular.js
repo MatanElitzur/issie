@@ -17438,7 +17438,7 @@ function $SnifferProvider() {
 
       // older webkit browser (533.9) on Boxee box has exactly the same problem as Android has
       // so let's not use the history API also
-      // We are purposefully using `!(android < 4)` to cover the case when `android` is undefined
+      // We are purposefully using `!(android < 4)` to coverImg the case when `android` is undefined
       // jshint -W018
       history: !!($window.history && $window.history.pushState && !(android < 4) && !boxee),
       // jshint +W018

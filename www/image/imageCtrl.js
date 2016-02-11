@@ -1,4 +1,4 @@
-angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicker','$cordovaFile', 'ImageService', '$scope', 'MAX_NUMBER_OF_IMAGES_TO_ADD', '$ionicPopup', '$timeout', 'MEMORY_GAME_NAME', 'LOTTO_GAME_NAME', function( $q ,$cordovaImagePicker ,$cordovaFile, ImageService, $scope, MAX_NUMBER_OF_IMAGES_TO_ADD, $ionicPopup, $timeout, MEMORY_GAME_NAME, LOTTO_GAME_NAME){
+angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicker','$cordovaFile', 'ImageService', '$scope', 'MAX_NUMBER_OF_IMAGES_TO_ADD', '$ionicPopup', '$timeout', 'MEMORY_GAME_NAME', 'LOTTO_GAME_NAME', '$ionicHistory', function( $q ,$cordovaImagePicker ,$cordovaFile, ImageService, $scope, MAX_NUMBER_OF_IMAGES_TO_ADD, $ionicPopup, $timeout, MEMORY_GAME_NAME, LOTTO_GAME_NAME, $ionicHistory){
   var vm = this;
   vm.images = [];
   var counterForDeleteButton = 0;
@@ -10,6 +10,10 @@ angular.module('imageModule').controller('ImageCtrl', ['$q' ,'$cordovaImagePicke
     height: 800,
     quality: 80
   };
+
+  vm.goBack = function(){
+    $ionicHistory.goBack();
+  }
 
   vm.showDeleteOptions = function(){
      if(vm.images.length == 0){
