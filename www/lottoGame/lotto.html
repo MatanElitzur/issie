@@ -7,12 +7,12 @@
   <div class="col responsive-sm parent" style="margin-top: 2%">
 
 
-    <div id = "gameImages" class="row lotto responsive-sm">
+    <ion-scroll id = "gameImages" class="row lotto">
 
-        <img id="{{image.id}}" class="lotto col col-33 responsive-sm" ng-src="{{image.image}}"
+        <img id="{{image.id}}" class="lotto" ng-src="{{image.image}}"
              ng-click="evaluate($event)" ng-repeat="image in imagesData"/>
 
-    </div>
+    </ion-scroll>
 
 
     <div id="tempimg" class="row bottom responsive-sm">

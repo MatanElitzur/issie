@@ -8,6 +8,7 @@ img.lotto {
   -webkit-border-radius: 10%;
   -moz-border-radius: 10%;
   border-radius: 10%;
+  width: 33.3%;
 }
 
 img.refresh {
@@ -23,11 +24,10 @@ img.refresh {
   -moz-border-radius: 10%;
   border-radius: 10%;
 }
-div.lotto{
+ion-scroll.lotto{
 
   width: 100%;
   height: 80%;
-  flex-wrap: wrap;
   border: outset;
   border: solid 1px #555;
   background-color: #eed;
@@ -63,3 +63,9 @@ div.parent{
   padding: 1%;
 
 }
+
+#gameImages>.scroll{
+  width: inherit;
+}
+
+
