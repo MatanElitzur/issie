@@ -24,14 +24,26 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
 
   function initMemoryImagesMatrix(){
     var j = -1;
+    var numberOfMemoryImages = 0;
     vm.memoryImagesMatrix = [];
     for(var i = 0; i < imagesData.length; i++) {
       if(imagesData[i].addToGameObj.memory){
         vm.memoryImagesMatrix.push({index: ++j, src:  flippedImage, image: imagesData[i].image, isPaired: false, isFlipped: false });
+        numberOfMemoryImages++;
         vm.memoryImagesMatrix.push({index: ++j, src:  flippedImage, image: imagesData[i].image, isPaired: false, isFlipped: false });
       }
     }
+
+    setPositiveNumberOfImages(numberOfMemoryImages);
     vm.memoryImagesMatrix =  shuffle(vm.memoryImagesMatrix);
+  }
+
+  function setPositiveNumberOfImages(numberOfMemoryImages) {
+    var isPozitive = numberOfMemoryImages % 2
+    if( isPozitive != 0) {
+      vm.memoryImagesMatrix.pop();
+      vm.memoryImagesMatrix.pop();
+    }
   }
 
   function shuffle(array) {
@@ -108,7 +120,8 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
   function shuffleImagesToPlayAgainPopup() {
     var gameOverPopup = $ionicPopup.confirm({
       title: "<div class='icon ion-happy-outline'> כל הכבוד </div>" ,
-      okText: ' שחק שוב '
+      okText: ' שחק שוב ',
+      cancelText: ' לא '
     });
 
     gameOverPopup.then(function(res) {
