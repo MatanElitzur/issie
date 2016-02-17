@@ -5,17 +5,35 @@
    </div>
 
    <ion-content class="has-header">
+     <!--
      <div align="center" ng-class="{&apos;animated hinge&apos;: vm.animateMemoryGame}">
        <a on-tap="vm.navigateMemory();">
          <h1 class="site__title mega"> משחק הזיכרון </h1>
        </a>
      </div>
+     -->
 
+     <div class="list card animated bounceInLeft" ng-class="{&apos;animated hinge&apos;: vm.animateHinge}">
+       <div class="item item-divider"> </div>
+       <div class="item item-body" align="center">
+           <a on-tap="vm.navigateMemory();">
+             <h1 class="site__title mega"> משחק הזיכרון </h1>
+           </a>
+       </div>
+       <div class="item item-body" align="center">
+           <a on-tap="vm.navigateLotto('lotto');">
+             <h1 class="site__title mega"> משחק לוטו </h1>
+           </a>
+       </div>
+     </div>
+
+     <!--
      <div align="center" ng-class="{&apos;animated hinge&apos;: vm.animateLottoGame}">
        <a on-tap="vm.navigateLotto('lotto');">
          <h1 class="site__title mega"> משחק לוטו </h1>
        </a>
      </div>
+     -->
    </ion-content>
 
 <!--
