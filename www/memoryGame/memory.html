@@ -7,11 +7,11 @@
     <a class="button button-icon icon ion-settings" href="#/memoryConfig"></a>
   </div>
 
-  <ion-content class="has-header" ng-init="vm.getImages()">
+  <ion-content scroll="false" class="has-header" ng-init="vm.getImages()">
     <div class="row imageStyle_Gallery">
       <div class="col col-25" ng-repeat="imageIndex in vm.memoryImagesMatrix">
           <div ng-class="{&apos;animated tada&apos;: imageIndex.animate}">
-            <img ng-src="{{imageIndex.src}}" ng-click="vm.toggleImage(imageIndex)" style="width:100%; height:auto; position: relative; top: 0; left: 0;">
+            <img class="imgMemory" ng-src="{{imageIndex.src}}" style="object-fit: cover;" ng-click="vm.toggleImage(imageIndex)" style="width:100%; height:auto; position: relative; top: 0; left: 0;">
           </div>
       </div>
     </div>

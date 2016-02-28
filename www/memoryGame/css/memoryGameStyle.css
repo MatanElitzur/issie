@@ -6,3 +6,15 @@
   -webkit-flex-wrap: wrap;
   flex-wrap: wrap;
 }
+
+.imgMemory {
+  position: relative;
+  float: left;
+  width:  100px;
+  height: 100px;
+  background-position: 50% 50%;
+  background-repeat:   no-repeat;
+  background-size:     cover;
+  padding-right: 10px;
+  padding-left: 10px;
+}
