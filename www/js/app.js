@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'ngCordova' ,'homeModule', 'lottoModule', 'memoryModule', 'memoryConfigModule', 'gamesServicesModule', 'imageModule', 'lottoConfigModule'])
+angular.module('starter', ['ionic', 'ngCordova' ,'homeModule', 'lottoModule', 'memoryModule', 'memoryConfigModule', 'gamesServicesModule', 'imageModule', 'lottoConfigModule', 'UsersListModule', 'UsersListServices'])
 
 .constant('LOTTO_GAME_JSON','lottoGame/data.json')
 .constant('MEMORY_GAME_JSON','memoryGame/data.json')
@@ -66,6 +66,11 @@ angular.module('starter', ['ionic', 'ngCordova' ,'homeModule', 'lottoModule', 'm
 			templateUrl: 'user/user.html',
 			controller: 'UserCtrl'
 		})
+    .state('users', {
+      url: '/users',
+      templateUrl: 'usersListItems/list-template.html',
+      controller: 'UsersListCtrl'
+    })
 		$urlRouterProvider.otherwise('/home');
 
 });

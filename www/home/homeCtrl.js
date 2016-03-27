@@ -23,5 +23,5 @@ angular.module('homeModule').controller('HomeCtrl',['$state', '$timeout', '$scop
       vm.animateHinge = false;
     }, 4000);
   }
-  
+
 }]);

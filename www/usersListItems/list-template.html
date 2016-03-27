@@ -1,26 +1,33 @@
 <!--
   This template loads for the 'List' state (app.js)
 -->
-	<ion-header-bar
-  		title="רשימת משתמשים"
-  		left-buttons="leftButtons"
-  		right-buttons="rightButtons"
-  		type="bar-dark"
-  		align-title="center">
-	</ion-header-bar>
+<ion-view view-title="UsersList">
+  <ion-header-bar class="bar-dark" align-title="center">
+    <a class="button button-icon icon ion-ios-arrow-back" on-tap="goBack()"></a>
+    <button class="button icon ion-person-add" ng-click="showAddChangeDialog('add')"></button>
+  </ion-header-bar>
 
-	<ion-content has-header="true">
-		<ion-list option-buttons="itemButtons" can-swipe="true">
-			<label class="item item-divider">
-    			רשימה
-  			</label>
-  			<ion-item ng-if="list.length == 0">
-				Press <i class="icon ion-ios7-plus-outline"></i> to add item
-			</ion-item>
-			<!--  -->
-			<ion-item ng-repeat="item in list" item="item" item-type="item item-icon-left" ng-click="makeDefault(item)" ng-tap="makeDefault(item)">
-	  					<i ng-if="item.useAsDefault" class="icon ion-checkmark"></i>
-	  					{{ item.description }}
-			</ion-item>
-		</ion-list>
-	</ion-content>
+  <ion-content has-header="true">
+    <ion-list option-buttons="itemButtons" can-swipe="true">
+      <div align="center">
+      <label class="item item-divider">
+        <b>
+רשימת משתמשים
+        </b>
+      </label>
+      </div>
+      <ion-item ng-repeat="item in list | filterMissingImage">
+        <div align="left">
+          <img class="imgUsersList" src={{item.img}}>
+        </div>
+        <div align="center" ng-click="makeDefault(item)" ng-tap="makeDefault(item)">
+          <i ng-if="item.play" class="icon ion-checkmark"></i>
+          {{ item.name }}
+        </div>
+        <div align="right">
+          <a class="button button-icon icon ion-edit"  ng-click="showEditItem(item)"></a>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
