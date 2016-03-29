@@ -1,14 +1,17 @@
-angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$timeout', '$ionicPlatform', '$cordovaNativeAudio', '$ionicHistory', '$ionicPopup' , function( ImageService, $timeout, $ionicPlatform, $cordovaNativeAudio, $ionicHistory, $ionicPopup){
+angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$timeout', '$ionicPlatform', '$cordovaNativeAudio', '$ionicHistory', '$ionicPopup', '$q' , function( ImageService, $timeout, $ionicPlatform, $cordovaNativeAudio, $ionicHistory, $ionicPopup, $q){
   var vm = this;
   vm.memoryImagesMatrix = [];
   var firstImage = null;
   var secondImage = null;
   var imagesData = null;
   var flippedImage = "./memoryGame/coverImg/coverImage.png";
+  var isWebView = ionic.Platform.isWebView(); // Check if we are running within a WebView (such as Cordova or PhoneGap).
 
   $ionicPlatform.ready(function() {
-    $cordovaNativeAudio.preloadSimple('imagesPaired', 'audio/tada.mp3');
-    $cordovaNativeAudio.preloadSimple('failedImagesPairing', 'audio/MirrorShattering.mp3');
+    if(isWebView) {
+      $cordovaNativeAudio.preloadSimple('imagesPaired', 'audio/tada.mp3');
+      $cordovaNativeAudio.preloadSimple('failedImagesPairing', 'audio/MirrorShattering.mp3');
+    }
   });
 
   vm.goBack = function(){
@@ -90,19 +93,64 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
       }
   }
 
+
+  function theImagesAreEqual(image) {
+   $timeout(function(){
+     if(isWebView) {
+        $cordovaNativeAudio.play('imagesPaired');
+     }
+     image.isPaired = true;
+     image.animate = true;
+     setImageInMatrixAsPaired(firstImage.index);
+     /*
+     setImageInMatrixAsPaired(firstImage.index);
+     hideImages();
+     initImages();
+     //TODO: Animation for success
+     if(isAllImagesPaired()) {
+        shuffleImagesToPlayAgainPopup();
+     }
+     */
+   }, 500).then(function(){
+     $timeout(function(){
+       hideImages();
+       initImages();
+       //TODO: Animation for success
+       if(isAllImagesPaired()) {
+         shuffleImagesToPlayAgainPopup();
+       }
+
+     },1500);
+   });
+  }
+
+  /*
   function theImagesAreEqual(image){
-      $timeout(function(){
-      $cordovaNativeAudio.play('imagesPaired');
-      image.isPaired = true;
-      image.animate = true;
-      setImageInMatrixAsPaired(firstImage.index);
+    $q.when(displayImagesEqualAnimation(image)).then(function(){
       initImages();
       //TODO: Animation for success
       if(isAllImagesPaired()) {
         shuffleImagesToPlayAgainPopup();
       }
+    });
 
+  }
+
+  function displayImagesEqualAnimation(image) {
+    $timeout(function(){
+      if(isWebView) {
+        $cordovaNativeAudio.play('imagesPaired');
+      }
+      image.isPaired = true;
+      image.animate = true;
+      setImageInMatrixAsPaired(firstImage.index);
+      hideImages();
     }, 500);
+  }
+*/
+  function hideImages() {
+    firstImage.hideImage = true;
+    secondImage.hideImage = true;
   }
 
   function isAllImagesPaired() {
@@ -135,11 +183,13 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
   function theImagesAreNotEqual(image){
       $timeout(function(){
       //The images are not equal
-      $cordovaNativeAudio.play('failedImagesPairing');
-      image.src = flippedImage;
-      image.isFlipped = false;
-      setImageAsFlippedImage(firstImage.index);
-      initImages();
+        if(isWebView) {
+          $cordovaNativeAudio.play('failedImagesPairing');
+        }
+        image.src = flippedImage;
+        image.isFlipped = false;
+        setImageAsFlippedImage(firstImage.index);
+        initImages();
     }, 1000);
   }
 
