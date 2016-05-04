@@ -5,7 +5,8 @@ angular.module('homeModule').controller('HomeCtrl',['$state', '$timeout', '$scop
   vm.navigateMemory = function() {
     vm.animateHinge = true;
     $timeout(function(){
-      $state.go('memory');
+      //$state.go('memory');
+      $state.go('initialMemory');
     }, 2000);
 
     $timeout(function(){

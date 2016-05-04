@@ -20,8 +20,8 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "com.ionic.keyboard",
-	"cordova-plugin-file",
-	"com.synconset.imagepicker"
+    "cordova-plugin-file",
+    "com.synconset.imagepicker"
   ],
   "cordovaPlatforms": [
     "ios",

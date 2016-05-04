@@ -1,0 +1,107 @@
+
+<ion-view view-title="InitialMemory" ng-controller="InitialMemoryCtrl as vm">
+
+  <div class="bar bar-header bar-positive">
+    <a class="button button-icon icon ion-ios-arrow-back" on-tap="vm.goBack()"></a>
+    <h1 class="title">משחק הזיכרון</h1>
+    <a class="button button-icon icon ion-settings" href="#/memoryConfig"></a>
+  </div>
+
+  <ion-content scroll="false" class="has-header" ">
+    <div style="border: 2px solid purple; padding: 5px 5px 5px 5px; margin: 5px 5px 5px 5px">
+      <div class="row">
+
+        <div class="col">
+          <div style="border: 2px solid black; padding-right: 5px; padding-bottom: 5px; margin-bottom: 5px; text-align: center"><b> רמת קושי </b></div>
+          <div style="border: 2px solid black; padding-right: 5px; margin-bottom: 5px">
+            <div ng-class="vm.iconHeight ? 'rowHeight64' : 'rowHeight32'">
+              <section class="textNumber">
+                <p align="center"><b>6</b></p>
+              </section>
+            </div>
+          </div>
+          <div style="border: 2px solid black; padding-right: 5px; padding-top: 5px; margin-top: 5px">
+            <div align="center" ng-class="vm.iconHeight ? 'rowHeight64' : 'rowHeight32'">
+              <section class="textNumber">
+                <p align="center"><b>10</b></p>
+              </section>
+            </div>
+          </div>
+          <div style="border: 2px solid black; padding-right: 5px; padding-top: 5px; margin-top: 5px">
+            <div align="center" ng-class="vm.iconHeight ? 'rowHeight64' : 'rowHeight32'">
+              <section class="textNumber">
+                <p align="center"><b>16</b></p>
+              </section>
+            </div>
+          </div>
+          <div style="border: 2px solid black; padding-right: 5px; padding-top: 5px; margin-top: 5px">
+            <div align="center" ng-class="vm.iconHeight ? 'rowHeight64' : 'rowHeight32'">
+              <section class="textNumber">
+                <p align="center"><b>20</b></p>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div style="border: 2px solid black; padding-right: 5px; padding-bottom: 5px; margin-bottom: 5px; text-align: center;" ><b> מספר משתתפים </b></div>
+          <div style="border: 2px solid black; padding-right: 5px;  margin-bottom: 5px;">
+            <div align="center">
+              <i class="icon ion-happy-outline" style="color:red;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
+            </div>
+          </div>
+          <div style="border: 2px solid black; padding-right: 5px; padding-top: 5px; margin-top: 5px">
+            <div align="center">
+              <i class="icon ion-happy-outline" style="color:blue;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
+              <i class="icon ion-happy-outline" style="color:green;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
+            </div>
+          </div>
+          <div style="border: 2px solid black; padding-right: 5px; padding-top: 5px; margin-top: 5px">
+            <div align="center">
+              <i class="icon ion-happy-outline" style="color:yellow;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
+              <i class="icon ion-happy-outline" style="color:purple;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
+              <i class="icon ion-happy-outline" style="color:orange;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
+            </div>
+          </div>
+          <div style="border: 2px solid black; padding-right: 5px; padding-top: 5px; margin-top: 5px">
+            <div align="center">
+              <i class="icon ion-happy-outline" style="color:deeppink;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
+              <i class="icon ion-happy-outline" style="color:aqua;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
+              <i class="icon ion-happy-outline" style="color:#e6b400;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
+              <i class="icon ion-happy-outline" style="color:#009689;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div>
+      <div class="row">
+        <div class="col" align="right">
+          <a class="button button-positive" href="#/memory"> התחל </a>
+        </div>
+        <div class="col" align="right" style="margin-right: 5px">
+          <div style="margin-bottom: 5px">
+            <a class="button button-energized" href="#/users"> הכנסת שם ותמונה </a>
+          </div>
+          <div>
+            <a class="button button-energized" href="#/memoryConfig"> הכנסת תמונת משחק </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+   </ion-content>
+
+<!--
+  <ion-content scroll="false" class="has-header" ng-init="vm.getImages()">
+    <div class="row imageStyle_Gallery">
+      <div class="col col-25" ng-repeat="imageIndex in vm.memoryImagesMatrix">
+        <div ng-class="{&apos;animated tada&apos;: imageIndex.animate, &apos;hideImg&apos; : imageIndex.hideImage}">
+          <img class="imgMemory" ng-src="{{imageIndex.src}}" style="object-fit: cover;" ng-click="vm.toggleImage(imageIndex)" style="width:100%; height:auto; position: relative; top: 0; left: 0;">
+        </div>
+      </div>
+    </div>
+  </ion-content>
+-->
+</ion-view>

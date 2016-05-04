@@ -38,3 +38,27 @@
 .hideImg {
   visibility:hidden
 }
+
+.iconHeight64 {
+  font-size: 64px;
+}
+
+.iconHeight32 {
+  font-size: 32px;
+}
+
+.rowHeight64 {
+  height: 64px;
+}
+
+.rowHeight32 {
+  height: 32px;
+}
+
+.textNumber {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
