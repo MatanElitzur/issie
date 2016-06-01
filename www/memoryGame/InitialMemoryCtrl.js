@@ -1,13 +1,44 @@
-angular.module('initialMemoryModule').controller('InitialMemoryCtrl', ['$ionicHistory','$ionicPlatform' , function($ionicHistory, $ionicPlatform){
+angular.module('initialMemoryModule')
+  .service('GameConfigService', function() {
+    var vm = this;
+    vm.numberOfPlayers = 1;
+    vm.gameDifficulty = 6;
+
+    vm.setNumberOfPlayers = function(numOfPlayers) {
+      vm.numberOfPlayers = numOfPlayers;
+    }
+
+    vm.getNumberOfPlayers = function() {
+      return vm.numberOfPlayers;
+    }
+
+    vm.setGameDifficulty = function(gameDifficulty) {
+      vm.gameDifficulty = gameDifficulty;
+    }
+
+    vm.getGameDifficulty = function() {
+      return vm.gameDifficulty;
+    }
+  })
+  .controller('InitialMemoryCtrl', ['$ionicHistory','$ionicPlatform', 'GameConfigService', function($ionicHistory, $ionicPlatform, GameConfigService){
   var vm = this;
 
   var isWebView = ionic.Platform.isWebView(); // Check if we are running within a WebView (such as Cordova or PhoneGap).
   vm.iconHeight = true;
+
   $ionicPlatform.ready(function() {
     if(isWebView) {
       vm.iconHeight = false;
     }
   });
+
+   vm.setGameDifficulty = function (difficulty) {
+      GameConfigService.setGameDifficulty(difficulty);
+   }
+
+   vm.setNumberOfPlayers = function (numOfPlayers) {
+      GameConfigService.setNumberOfPlayers(numOfPlayers);
+   }
 
   vm.goBack = function() {
     $ionicHistory.goBack();
@@ -70,3 +101,4 @@ angular.module('initialMemoryModule').controller('InitialMemoryCtrl', ['$ionicHi
   }
 
 }]);
+

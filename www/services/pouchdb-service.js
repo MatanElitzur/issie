@@ -9,6 +9,9 @@ angular.module('gamesServicesModule').service('ImageService', ['$q', '$http', fu
           // Creates the database or opens if it already exists
           //Create a WebSQL-only Pouch (e.g. when using the SQLite Plugin for Cordova/PhoneGap):
           _db = new PouchDB('images', {adapter: 'websql'});
+          console.log("The current adapter: " + _db._adapter ); // prints either 'idb' or 'websql'
+      //_db = new PouchDB('images', {adapter: 'IndexedDB'});
+      //
          /* On a mobile device the adapter will be displayed as websql even if it is using SQLite,
             so to confirm that it is actually using SQLite you'll have to do this*/
           _db.info().then(console.log.bind(console));
@@ -81,6 +84,8 @@ angular.module('gamesServicesModule').service('ImageService', ['$q', '$http', fu
                       //var promise = addFilesystemPath();
                       //return promise;
                       return _images;
+                  }, function(error) {
+                       console.log('Failed to get data from db. Error: ' + error);
                   });
           } else {
               // Return cached data as a promise

@@ -32,8 +32,7 @@
     "tag": "5.0.0",
     "commit": "ee301040609d419234f7749ec2827679a5baea6c"
   },
-  "_source": "git://github.com/pouchdb/pouchdb.git",
+  "_source": "https://github.com/pouchdb/pouchdb.git",
   "_target": "~5.0.0",
-  "_originalSource": "pouchdb",
-  "_direct": true
+  "_originalSource": "pouchdb"
 }

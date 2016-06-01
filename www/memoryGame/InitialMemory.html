@@ -12,30 +12,30 @@
       <div class="row">
 
         <div class="col">
-          <div style="border: 2px solid black; padding-right: 5px; padding-bottom: 5px; margin-bottom: 5px; text-align: center"><b> רמת קושי </b></div>
-          <div style="border: 2px solid black; padding-right: 5px; margin-bottom: 5px">
-            <div ng-class="vm.iconHeight ? 'rowHeight64' : 'rowHeight32'">
+          <div style="border: 2px solid black; padding-right: 5px; padding-bottom: 5px; margin-bottom: 5px; text-align: center"><b> מספר קלפים </b></div>
+          <div style="border: 2px solid black;  margin-bottom: 5px">
+            <div ng-style="myStyle6" ng-class="vm.iconHeight ? 'rowHeight64' : 'rowHeight32'" ng-click="vm.setGameDifficulty(6);myStyle6={'background-color':'#FF8C00'};myStyle10={};myStyle16={};myStyle20={}">
               <section class="textNumber">
                 <p align="center"><b>6</b></p>
               </section>
             </div>
           </div>
-          <div style="border: 2px solid black; padding-right: 5px; padding-top: 5px; margin-top: 5px">
-            <div align="center" ng-class="vm.iconHeight ? 'rowHeight64' : 'rowHeight32'">
+          <div style="border: 2px solid black; margin-top: 5px">
+            <div ng-style="myStyle10" align="center" ng-class="vm.iconHeight ? 'rowHeight64' : 'rowHeight32'" ng-click="vm.setGameDifficulty(10);myStyle10={'background-color':'#FF8C00'};myStyle6={};myStyle16={};myStyle20={}">
               <section class="textNumber">
                 <p align="center"><b>10</b></p>
               </section>
             </div>
           </div>
-          <div style="border: 2px solid black; padding-right: 5px; padding-top: 5px; margin-top: 5px">
-            <div align="center" ng-class="vm.iconHeight ? 'rowHeight64' : 'rowHeight32'">
+          <div style="border: 2px solid black; margin-top: 5px">
+            <div ng-style="myStyle16" align="center" ng-class="vm.iconHeight ? 'rowHeight64' : 'rowHeight32'" ng-click="vm.setGameDifficulty(16);myStyle16={'background-color':'#FF8C00'};;myStyle6={};myStyle10={};myStyle20={}">
               <section class="textNumber">
                 <p align="center"><b>16</b></p>
               </section>
             </div>
           </div>
-          <div style="border: 2px solid black; padding-right: 5px; padding-top: 5px; margin-top: 5px">
-            <div align="center" ng-class="vm.iconHeight ? 'rowHeight64' : 'rowHeight32'">
+          <div ng-style="myStyle20" style="border: 2px solid black; margin-top: 5px">
+            <div align="center" ng-class="vm.iconHeight ? 'rowHeight64' : 'rowHeight32'" ng-click="vm.setGameDifficulty(20);myStyle20={'background-color':'#FF8C00'};myStyle6={};myStyle10={};myStyle16={}">
               <section class="textNumber">
                 <p align="center"><b>20</b></p>
               </section>
@@ -45,26 +45,26 @@
 
         <div class="col">
           <div style="border: 2px solid black; padding-right: 5px; padding-bottom: 5px; margin-bottom: 5px; text-align: center;" ><b> מספר משתתפים </b></div>
-          <div style="border: 2px solid black; padding-right: 5px;  margin-bottom: 5px;">
-            <div align="center">
+          <div style="border: 2px solid black; margin-bottom: 5px;">
+            <div align="center" ng-click="vm.setNumberOfPlayers(1)">
               <i class="icon ion-happy-outline" style="color:red;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
             </div>
           </div>
-          <div style="border: 2px solid black; padding-right: 5px; padding-top: 5px; margin-top: 5px">
-            <div align="center">
+          <div style="border: 2px solid black; margin-top: 5px">
+            <div align="center" ng-click="vm.setNumberOfPlayers(2)">
               <i class="icon ion-happy-outline" style="color:blue;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
               <i class="icon ion-happy-outline" style="color:green;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
             </div>
           </div>
-          <div style="border: 2px solid black; padding-right: 5px; padding-top: 5px; margin-top: 5px">
-            <div align="center">
+          <div style="border: 2px solid black; margin-top: 5px">
+            <div align="center" ng-click="vm.setNumberOfPlayers(3)">
               <i class="icon ion-happy-outline" style="color:yellow;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
               <i class="icon ion-happy-outline" style="color:purple;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
               <i class="icon ion-happy-outline" style="color:orange;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
             </div>
           </div>
-          <div style="border: 2px solid black; padding-right: 5px; padding-top: 5px; margin-top: 5px">
-            <div align="center">
+          <div style="border: 2px solid black; margin-top: 5px">
+            <div align="center" ng-click="vm.setNumberOfPlayers(4)">
               <i class="icon ion-happy-outline" style="color:deeppink;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
               <i class="icon ion-happy-outline" style="color:aqua;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
               <i class="icon ion-happy-outline" style="color:#e6b400;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>

@@ -1,4 +1,4 @@
-angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$timeout', '$ionicPlatform', '$cordovaNativeAudio', '$ionicHistory', '$ionicPopup', '$q' , function( ImageService, $timeout, $ionicPlatform, $cordovaNativeAudio, $ionicHistory, $ionicPopup, $q){
+angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$timeout', '$ionicPlatform', '$cordovaNativeAudio', '$ionicHistory', '$ionicPopup', '$q', 'GameConfigService' , function( ImageService, $timeout, $ionicPlatform, $cordovaNativeAudio, $ionicHistory, $ionicPopup, $q, GameConfigService){
   var vm = this;
   vm.memoryImagesMatrix = [];
   var firstImage = null;
@@ -29,24 +29,17 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
     var j = -1;
     var numberOfMemoryImages = 0;
     vm.memoryImagesMatrix = [];
-    for(var i = 0; i < imagesData.length; i++) {
+    var gameDifficulty = GameConfigService.getGameDifficulty() / 2;
+    for(var i = 0; i < imagesData.length && gameDifficulty > 0; i++) {
       if(imagesData[i].addToGameObj.memory){
         vm.memoryImagesMatrix.push({index: ++j, src:  flippedImage, image: imagesData[i].image, isPaired: false, isFlipped: false });
         numberOfMemoryImages++;
         vm.memoryImagesMatrix.push({index: ++j, src:  flippedImage, image: imagesData[i].image, isPaired: false, isFlipped: false });
+        gameDifficulty--;
       }
     }
-
-    setPositiveNumberOfImages(numberOfMemoryImages);
+    
     vm.memoryImagesMatrix =  shuffle(vm.memoryImagesMatrix);
-  }
-
-  function setPositiveNumberOfImages(numberOfMemoryImages) {
-    var isPozitive = numberOfMemoryImages % 2
-    if( isPozitive != 0) {
-      vm.memoryImagesMatrix.pop();
-      vm.memoryImagesMatrix.pop();
-    }
   }
 
   function shuffle(array) {

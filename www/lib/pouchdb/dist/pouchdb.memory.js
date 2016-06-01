@@ -1,6 +1,6 @@
 //    PouchDB in-memory plugin 5.0.0
 //    Based on MemDOWN: https://github.com/rvagg/memdown
-//
+//    
 //    (c) 2012-2015 Dale Harvey and the PouchDB team
 //    PouchDB may be freely distributed under the Apache license, version 2.0.
 //    For all details and documentation:
@@ -3626,7 +3626,7 @@ Dual licensed under the MIT and GPL licenses.
  *   >>> Math.uuid(15)     // 15 character ID (default base=62)
  *   "VcydxgltxrVZSTV"
  *
- *   // Two arguments - returns ID of the specified length, and radix.
+ *   // Two arguments - returns ID of the specified length, and radix. 
  *   // (Radix must be <= 62)
  *   >>> Math.uuid(8, 2)  // 8 character ID (base=2)
  *   "01001010"
@@ -6111,17 +6111,17 @@ function coerce(val) {
 },{"114":114}],63:[function(_dereq_,module,exports){
 /**
  * Copyright (c) 2013 Petka Antonov
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:</p>
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
@@ -7678,7 +7678,7 @@ function fixDoubleBlack(stack) {
         } else {
           //console.log("case 2: black sibling, black parent", p.right.value)
           p.right = repaint(RED, s)
-          continue
+          continue  
         }
       } else {
         //console.log("case 3: red sibling")
@@ -7767,7 +7767,7 @@ function fixDoubleBlack(stack) {
         } else {
           //console.log("case 2: black sibling, black parent")
           p.left = repaint(RED, s)
-          continue
+          continue  
         }
       } else {
         //console.log("case 3: red sibling")
@@ -8400,7 +8400,7 @@ Codec.prototype.createStreamDecoder = function(opts){
   } else if (opts.keys) {
     return function(key) {
       return self.decodeKey(key, opts);
-    };
+    }; 
   } else if (opts.values) {
     return function(_, value){
       return self.decodeValue(value, opts);
@@ -8444,7 +8444,7 @@ exports.binary = {
   encode: function(data){
     return isBinary(data)
       ? data
-      : new Buffer(data);
+      : new Buffer(data);      
   },
   decode: identity,
   buffer: true,
@@ -9462,7 +9462,7 @@ module.exports = function (db, precodec, codec, compare) {
 
       opts = opts || {}
 
-      if('object' !== typeof opts) throw new Error('opts must be object, was:'+ opts)
+      if('object' !== typeof opts) throw new Error('opts must be object, was:'+ opts) 
 
       if('function' === typeof opts) cb = opts, opts = {}
 
@@ -9756,11 +9756,11 @@ function prefix (a, b) {
   if('string' == typeof lastA
     && 0 != lastB.indexOf(lastA))
       return false
-
+  
   //handle cas where there is no key prefix
   //(a hook on an entire sublevel)
   if(a.length == 1 && isArrayLike(lastA)) l ++
-
+  
   while(l--) {
     if(compare(a[l], b[l])) return false
   }
@@ -10378,29 +10378,29 @@ LevelUP.prototype.batch = function (arr_, options, callback) {
   })
 }
 
-LevelUP.prototype.approximateSize = deprecate(function (start_, end_, options, callback) {
-  var self = this
-    , start
-    , end
-
-  callback = getCallback(options, callback)
-
-  options = getOptions(options)
-
-  if (start_ === null || start_ === undefined
-        || end_ === null || end_ === undefined || 'function' !== typeof callback)
-    return readError(this, 'approximateSize() requires start, end and callback arguments', callback)
-
-  start = this._codec.encodeKey(start_, options)
-  end   = this._codec.encodeKey(end_, options)
-
-  this.db.approximateSize(start, end, function (err, size) {
-    if (err) {
-      return dispatchError(self, new OpenError(err), callback)
-    } else if (callback) {
-      callback(null, size)
-    }
-  })
+LevelUP.prototype.approximateSize = deprecate(function (start_, end_, options, callback) {   
+  var self = this    
+    , start    
+    , end    
+   
+  callback = getCallback(options, callback)    
+   
+  options = getOptions(options)    
+   
+  if (start_ === null || start_ === undefined    
+        || end_ === null || end_ === undefined || 'function' !== typeof callback)    
+    return readError(this, 'approximateSize() requires start, end and callback arguments', callback)   
+   
+  start = this._codec.encodeKey(start_, options)   
+  end   = this._codec.encodeKey(end_, options)   
+   
+  this.db.approximateSize(start, end, function (err, size) {   
+    if (err) {   
+      return dispatchError(self, new OpenError(err), callback)   
+    } else if (callback) {   
+      callback(null, size)   
+    }    
+  })   
 }, 'db.approximateSize() is deprecated. Use db.db.approximateSize() instead')
 
 LevelUP.prototype.readStream =
@@ -13525,7 +13525,7 @@ function fromList(n, state) {
       ret = list.shift();
     } else {
       // complex case.
-      // we have enough to coverImg it, but it spans past the first buffer.
+      // we have enough to cover it, but it spans past the first buffer.
       if (stringMode)
         ret = '';
       else
@@ -15944,7 +15944,7 @@ function fromList(n, state) {
       ret = list.shift();
     } else {
       // complex case.
-      // we have enough to coverImg it, but it spans past the first buffer.
+      // we have enough to cover it, but it spans past the first buffer.
       if (stringMode)
         ret = '';
       else
@@ -17005,7 +17005,7 @@ inherits(DestroyableTransform, Transform)
 DestroyableTransform.prototype.destroy = function(err) {
   if (this._destroyed) return
   this._destroyed = true
-
+  
   var self = this
   process.nextTick(function() {
     if (err)
