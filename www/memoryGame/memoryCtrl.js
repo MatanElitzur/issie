@@ -1,4 +1,4 @@
-angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$timeout', '$ionicPlatform', '$cordovaNativeAudio', '$ionicHistory', '$ionicPopup', '$q', 'GameConfigService' , function( ImageService, $timeout, $ionicPlatform, $cordovaNativeAudio, $ionicHistory, $ionicPopup, $q, GameConfigService){
+angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$timeout', '$ionicPlatform', '$cordovaNativeAudio', '$ionicHistory', '$ionicPopup', '$q', 'GameConfigService', 'PlayersListFactory', function( ImageService, $timeout, $ionicPlatform, $cordovaNativeAudio, $ionicHistory, $ionicPopup, $q, GameConfigService,PlayersListFactory){
   var vm = this;
   vm.memoryImagesMatrix = [];
   var firstImage = null;
@@ -7,12 +7,46 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
   var flippedImage = "./memoryGame/coverImg/coverImage.png";
   var isWebView = ionic.Platform.isWebView(); // Check if we are running within a WebView (such as Cordova or PhoneGap).
 
+  vm.playersList = [];
+
+  function initPlayers() {
+    vm.playersList = PlayersListFactory.getPlayersList();
+    var chosenNumberOfPlayersByUser = GameConfigService.getNumberOfPlayers();
+    if(chosenNumberOfPlayersByUser < vm.playersList.length) {
+       vm.playersList.splice(0,vm.playersList.length - chosenNumberOfPlayersByUser);
+    }
+    else if(chosenNumberOfPlayersByUser > vm.playersList.length) {
+      //Enhance array
+      var lengthOfArrayBeforeEnhance = vm.playersList.length;
+      var delta = chosenNumberOfPlayersByUser - vm.playersList.length;
+      for(var i = 0 ; i < delta ; i++) {
+        vm.playersList.push({});
+      }
+      //add default image to enhance array.
+      var index = lengthOfArrayBeforeEnhance;
+      for(var index ; index <  vm.playersList.length; index++ ) {
+        vm.playersList[index].img = flippedImage;
+      }
+    }
+    var firstTurn = true;
+    angular.forEach(vm.playersList, function(value, key){
+      value.numberOfCards = 0;
+      if(firstTurn) {
+        firstTurn = false;
+        value.myTurn = true;
+      }
+      else {
+        value.myTurn = false;
+      }
+    });
+  }
+
   $ionicPlatform.ready(function() {
     if(isWebView) {
       $cordovaNativeAudio.preloadSimple('imagesPaired', 'audio/tada.mp3');
       $cordovaNativeAudio.preloadSimple('failedImagesPairing', 'audio/MirrorShattering.mp3');
     }
-  });
+  })
 
   vm.goBack = function(){
     $ionicHistory.goBack();
@@ -22,6 +56,7 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
     ImageService.getAllImagesFromDB().then(function(result){
       imagesData = result;
       initMemoryImagesMatrix();
+      initPlayers();
     });
   }
 
@@ -38,7 +73,7 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
         gameDifficulty--;
       }
     }
-    
+
     vm.memoryImagesMatrix =  shuffle(vm.memoryImagesMatrix);
   }
 
@@ -78,14 +113,27 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
             //checkIfImagesAreEqual;
             if(firstImage.src === secondImage.src){
                theImagesAreEqual(image);
+               addPointsToUser();
             }
             else {
                theImagesAreNotEqual(image);
+               turnOfNextUser();
             }
           }
       }
   }
 
+  function addPointsToUser() {
+    for(var i = 0 ; i < vm.playersList.length ; i++) {
+       if(vm.playersList[i].myTurn) {
+         vm.playersList[i].numberOfCards++;
+       }
+    }
+  }
+
+  function turnOfNextUser() {
+    //TODO
+  }
 
   function theImagesAreEqual(image) {
    $timeout(function(){
@@ -111,6 +159,9 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
        //TODO: Animation for success
        if(isAllImagesPaired()) {
          shuffleImagesToPlayAgainPopup();
+       }
+       else {
+         turnOfNextUser();
        }
 
      },1500);
@@ -169,6 +220,7 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
       if(res) {
         initMemoryImagesMatrix();
         vm.memoryImagesMatrix = shuffle(vm.memoryImagesMatrix);
+        initPlayers();
       }
     });
   }

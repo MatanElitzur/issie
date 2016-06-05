@@ -46,25 +46,25 @@
         <div class="col">
           <div style="border: 2px solid black; padding-right: 5px; padding-bottom: 5px; margin-bottom: 5px; text-align: center;" ><b> מספר משתתפים </b></div>
           <div style="border: 2px solid black; margin-bottom: 5px;">
-            <div align="center" ng-click="vm.setNumberOfPlayers(1)">
+            <div ng-style="numOfPlayersStyle1" align="center" ng-click="vm.setNumberOfPlayers(1);numOfPlayersStyle1={'background-color':'#FF8C00'};numOfPlayersStyle2={};numOfPlayersStyle3={};numOfPlayersStyle4={}">
               <i class="icon ion-happy-outline" style="color:red;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
             </div>
           </div>
           <div style="border: 2px solid black; margin-top: 5px">
-            <div align="center" ng-click="vm.setNumberOfPlayers(2)">
+            <div ng-style="numOfPlayersStyle2" align="center" ng-click="vm.setNumberOfPlayers(2);numOfPlayersStyle2={'background-color':'#FF8C00'};numOfPlayersStyle1={};numOfPlayersStyle3={};numOfPlayersStyle4={}">
               <i class="icon ion-happy-outline" style="color:blue;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
               <i class="icon ion-happy-outline" style="color:green;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
             </div>
           </div>
           <div style="border: 2px solid black; margin-top: 5px">
-            <div align="center" ng-click="vm.setNumberOfPlayers(3)">
+            <div ng-style="numOfPlayersStyle3" align="center" ng-click="vm.setNumberOfPlayers(3);numOfPlayersStyle3={'background-color':'#FF8C00'};numOfPlayersStyle1={};numOfPlayersStyle2={};numOfPlayersStyle4={}">
               <i class="icon ion-happy-outline" style="color:yellow;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
               <i class="icon ion-happy-outline" style="color:purple;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
               <i class="icon ion-happy-outline" style="color:orange;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
             </div>
           </div>
           <div style="border: 2px solid black; margin-top: 5px">
-            <div align="center" ng-click="vm.setNumberOfPlayers(4)">
+            <div ng-style="numOfPlayersStyle4" align="center" ng-click="vm.setNumberOfPlayers(4);numOfPlayersStyle4={'background-color':'#FF8C00'};numOfPlayersStyle1={};numOfPlayersStyle2={};numOfPlayersStyle3={}">
               <i class="icon ion-happy-outline" style="color:deeppink;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
               <i class="icon ion-happy-outline" style="color:aqua;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>
               <i class="icon ion-happy-outline" style="color:#e6b400;" ng-class="vm.iconHeight ? 'iconHeight64' : 'iconHeight32'"></i>

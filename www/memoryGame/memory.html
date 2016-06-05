@@ -3,10 +3,29 @@
 
   <div class="bar bar-header bar-positive">
     <a class="button button-icon icon ion-ios-arrow-back" on-tap="vm.goBack()"></a>
+    <div ng-if="vm.playersList[0]" ng-class="{&apos;myTurn&apos;: vm.playersList[0].myTurn}">
+      <img class="imgUsersDisplayGame" src={{vm.playersList[0].img}} />
+      <p style="display: flex; color:black"><b> {{vm.playersList[0].numberOfCards}} </b></p>
+    </div>
+
+    <div ng-if="vm.playersList[1]" ng-class="{&apos;myTurn&apos;: vm.playersList[1].myTurn}">
+      <img class="imgUsersDisplayGame" src={{vm.playersList[1].img}} />
+      <p style="display: flex; color:black"><b> {{vm.playersList[1].numberOfCards}} </b></p>
+    </div>
+
+    <div ng-if="vm.playersList[2]" ng-class="{&apos;myTurn&apos;: vm.playersList[2].myTurn}">
+      <img class="imgUsersDisplayGame" src={{vm.playersList[2].img}} />
+      <p style="display: flex; color:black"><b> {{vm.playersList[2].numberOfCards}} </b></p>
+    </div>
+
+    <div ng-if="vm.playersList[3]" ng-class="{&apos;myTurn&apos;: vm.playersList[3].myTurn}">
+      <img class="imgUsersDisplayGame" src={{vm.playersList[3].img}} />
+      <p style="display: flex; color:black"><b> {{vm.playersList[3].numberOfCards}} </b></p>
+    </div>
+
     <h1 class="title">משחק הזיכרון</h1>
     <a class="button button-icon icon ion-settings" href="#/memoryConfig"></a>
   </div>
-
   <ion-content scroll="false" class="has-header" ng-init="vm.getImages()">
     <div class="row imageStyle_Gallery">
       <div class="col col-25" ng-repeat="imageIndex in vm.memoryImagesMatrix">
@@ -16,5 +35,4 @@
       </div>
     </div>
   </ion-content>
-
  </ion-view>

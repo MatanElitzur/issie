@@ -3,6 +3,7 @@ angular.module('initialMemoryModule')
     var vm = this;
     vm.numberOfPlayers = 1;
     vm.gameDifficulty = 6;
+    //vm.player=[];
 
     vm.setNumberOfPlayers = function(numOfPlayers) {
       vm.numberOfPlayers = numOfPlayers;
