@@ -1,4 +1,4 @@
-angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$timeout', '$ionicPlatform', '$cordovaNativeAudio', '$ionicHistory', '$ionicPopup', '$q', 'GameConfigService', 'PlayersListFactory', function( ImageService, $timeout, $ionicPlatform, $cordovaNativeAudio, $ionicHistory, $ionicPopup, $q, GameConfigService,PlayersListFactory){
+angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$timeout', '$ionicPlatform', '$cordovaNativeAudio', '$ionicHistory', '$ionicPopup', '$q', 'GameConfigService', 'PlayersListFactory', '$scope', function( ImageService, $timeout, $ionicPlatform, $cordovaNativeAudio, $ionicHistory, $ionicPopup, $q, GameConfigService,PlayersListFactory, $scope){
   var vm = this;
   vm.memoryImagesMatrix = [];
   var firstImage = null;
@@ -6,7 +6,7 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
   var imagesData = null;
   var flippedImage = "./memoryGame/coverImg/coverImage.png";
   var isWebView = ionic.Platform.isWebView(); // Check if we are running within a WebView (such as Cordova or PhoneGap).
-
+  $scope.winnerInfo = {'image': '', 'numberOfCards': 0};
   vm.playersList = [];
 
   function initPlayers() {
@@ -112,8 +112,8 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
             secondImage = image;
             //checkIfImagesAreEqual;
             if(firstImage.src === secondImage.src){
-               theImagesAreEqual(image);
                addPointsToUser();
+               theImagesAreEqual(image);
             }
             else {
                theImagesAreNotEqual(image);
@@ -132,7 +132,19 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
   }
 
   function turnOfNextUser() {
-    //TODO
+    for(var i = 0 ; i < vm.playersList.length ; i++) {
+      if(vm.playersList[i].myTurn) {
+         var lastElementInTheArray = (vm.playersList.length - 1);
+         if(i == lastElementInTheArray) {
+           vm.playersList[i].myTurn = false;
+           vm.playersList[0].myTurn = true;
+         }
+         else {
+           vm.playersList[i].myTurn = false;
+           vm.playersList[i + 1].myTurn = true;
+         }
+      }
+    }
   }
 
   function theImagesAreEqual(image) {
@@ -158,6 +170,7 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
        initImages();
        //TODO: Animation for success
        if(isAllImagesPaired()) {
+         setWinnerInfo();
          shuffleImagesToPlayAgainPopup();
        }
        else {
@@ -166,6 +179,15 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
 
      },1500);
    });
+  }
+
+  function setWinnerInfo(){
+      for(var i = 0 ; i < vm.playersList.length ; i++) {
+          if(vm.playersList[i].numberOfCards > $scope.winnerInfo.numberOfCards) {
+            $scope.winnerInfo.numberOfCards = vm.playersList[i].numberOfCards;
+            $scope.winnerInfo.image = vm.playersList[i].img;
+          }
+      }
   }
 
   /*
@@ -211,11 +233,15 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
 
   function shuffleImagesToPlayAgainPopup() {
     var gameOverPopup = $ionicPopup.confirm({
-      title: "<div class='icon ion-happy-outline'> כל הכבוד </div>" ,
+      title: "<div class='icon ion-happy-outline'> כל הכבוד </div>",
+      scope: $scope,
+      templateUrl: 'popupWinner.html',
       okText: ' שחק שוב ',
       cancelText: ' לא '
     });
-
+    //<img class="imgUsersDisplayGame" src={{vm.playersList[1].img}} />
+    //<p style="display: flex; color:black"><b> {{vm.playersList[1].numberOfCards}} </b></p>
+//vm.playersList[i]
     gameOverPopup.then(function(res) {
       if(res) {
         initMemoryImagesMatrix();
