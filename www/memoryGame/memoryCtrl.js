@@ -138,10 +138,12 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
          if(i == lastElementInTheArray) {
            vm.playersList[i].myTurn = false;
            vm.playersList[0].myTurn = true;
+           break;
          }
          else {
            vm.playersList[i].myTurn = false;
            vm.playersList[i + 1].myTurn = true;
+           break;
          }
       }
     }
@@ -171,7 +173,8 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
        //TODO: Animation for success
        if(isAllImagesPaired()) {
          setWinnerInfo();
-         shuffleImagesToPlayAgainPopup();
+         var oneWinner = isThereOneWinner();
+         shuffleImagesToPlayAgainPopup(oneWinner);
        }
        else {
          turnOfNextUser();
@@ -188,6 +191,21 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
             $scope.winnerInfo.image = vm.playersList[i].img;
           }
       }
+  }
+
+  function isThereOneWinner() {
+    var isThereOnlyOneWinner = true;
+    var oneWinner = 0;
+    for(var i = 0 ; i < vm.playersList.length ; i++) {
+      if ($scope.winnerInfo.numberOfCards == vm.playersList[i].numberOfCards) {
+          oneWinner++;
+          if(oneWinner == 2) {
+            isThereOnlyOneWinner = false;
+            break;
+          }
+      }
+    }
+    return isThereOnlyOneWinner;
   }
 
   /*
@@ -231,24 +249,41 @@ angular.module('memoryModule').controller('MemoryCtrl', [ 'ImageService', '$time
     return gameOver;
   }
 
-  function shuffleImagesToPlayAgainPopup() {
-    var gameOverPopup = $ionicPopup.confirm({
-      title: "<div class='icon ion-happy-outline'> כל הכבוד </div>",
-      scope: $scope,
-      templateUrl: 'popupWinner.html',
-      okText: ' שחק שוב ',
-      cancelText: ' לא '
-    });
-    //<img class="imgUsersDisplayGame" src={{vm.playersList[1].img}} />
-    //<p style="display: flex; color:black"><b> {{vm.playersList[1].numberOfCards}} </b></p>
-//vm.playersList[i]
-    gameOverPopup.then(function(res) {
-      if(res) {
-        initMemoryImagesMatrix();
-        vm.memoryImagesMatrix = shuffle(vm.memoryImagesMatrix);
-        initPlayers();
-      }
-    });
+  function shuffleImagesToPlayAgainPopup(onlyOneWinner) {
+    if (onlyOneWinner) {
+      var gameOverPopupOneWinner = $ionicPopup.confirm({
+        title: "<div class='icon ion-happy-outline'> כל הכבוד </div>",
+        scope: $scope,
+        templateUrl: 'popupWinner.html',
+        okText: ' שחק שוב ',
+        cancelText: ' לא '
+      });
+
+      gameOverPopupOneWinner.then(function(res) {
+        if(res) {
+          initMemoryImagesMatrix();
+          vm.memoryImagesMatrix = shuffle(vm.memoryImagesMatrix);
+          initPlayers();
+        }
+      });
+    }
+    else {
+      var gameOverPopupNoWinner = $ionicPopup.confirm({
+        title: "<div> שוויון, אין מנצח </div>",
+        scope: $scope,
+        okText: ' שחק שוב ',
+        cancelText: ' לא '
+      });
+
+      gameOverPopupNoWinner.then(function(res) {
+        if(res) {
+          initMemoryImagesMatrix();
+          vm.memoryImagesMatrix = shuffle(vm.memoryImagesMatrix);
+          initPlayers();
+        }
+      });
+    }
+
   }
 
   function theImagesAreNotEqual(image){
